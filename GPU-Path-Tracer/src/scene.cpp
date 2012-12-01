@@ -6,6 +6,7 @@
 #include <iostream>
 #include "scene.h"
 
+
 scene::scene(string filename){
 	cout << "Reading scene frome " << filename << "..." << endl;
 	cout << " " << endl;
@@ -32,6 +33,21 @@ scene::scene(string filename){
 	}
 }
 
+int scene::loadMesh(string filename)
+{
+	
+	mesh= new obj();
+	objLoader* loader= new objLoader(filename,mesh);
+	mesh->buildVBOs();
+
+	cout<<"buildingvbos";
+
+	meshes.push_back(*mesh);
+	delete mesh;
+	delete loader;
+	return -1;
+}
+
 int scene::loadObject(string objectid){
     int id = atoi(objectid.c_str());
     if(id!=objects.size()){
@@ -52,6 +68,7 @@ int scene::loadObject(string objectid){
                 cout << "Creating new cube..." << endl;
 				newObject.type = CUBE;
             }else{
+
 				string objline = line;
                 string name;
                 string extension;
@@ -61,7 +78,10 @@ int scene::loadObject(string objectid){
                 if(strcmp(extension.c_str(), "obj")==0){
                     cout << "Creating new mesh..." << endl;
                     cout << "Reading mesh from " << line << "... " << endl;
+					//// my code//  
 		    		newObject.type = MESH;
+					loadMesh(line);
+
                 }else{
                     cout << "ERROR: " << line << " is not a valid object type!" << endl;
                     return -1;
@@ -126,8 +146,14 @@ int scene::loadObject(string objectid){
 		newObject.inverseTransforms[i] = utilityCore::glmMat4ToCudaMat4(glm::inverse(transform));
 		newObject.tranposeTranforms[i] = utilityCore::glmMat4ToCudaMat4(glm::inverse(glm::transpose(transform)));
 	}
-	
+//	if(newObject.type==CUBE || newObject.type==SPHERE)
+//	{
         objects.push_back(newObject);
+//	}
+	//else if(newObject.type==MESH)
+	//{
+		//meshes.push_back(newObject); 
+//	}
 	
 	cout << "Loaded " << frameCount << " frames for Object " << objectid << "!" << endl;
         return 1;

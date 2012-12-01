@@ -1,51 +1,61 @@
-﻿Build started 11/9/2012 4:18:33 PM.
-     1>Project "C:\Users\gundeep\Downloads\Project2-Pathtracer\PROJ1_WIN\565Raytracer\565Raytracer.vcxproj" on node 2 (build target(s)).
+﻿Build started 12/1/2012 4:04:47 AM.
+     1>Project "G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\565Raytracer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Release\565Raytracer.unsuccessfulbuild" because "AlwaysCreate" was specified.
        AddCudaCompileDeps:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" /I../shared/glew/includes /I../shared/freeglut/includes /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /I. /FIcuda_runtime.h /c C:\Users\gundeep\Downloads\Project2-Pathtracer\src\raytraceKernel.cu 
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" /I../shared/glew/includes /I../shared/freeglut/includes /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /I. /FIcuda_runtime.h /c "G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu" 
        AddCudaCompilePropsDeps:
        Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
        CudaBuild:
          Compiling CUDA source file ..\..\src\raytraceKernel.cu...
-         cmd.exe /C "C:\Users\gundeep\AppData\Local\Temp\4051110198914054b2dbfb23578c591e.cmd"
-         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"    --keep-dir "Release" -maxrregcount=0  --machine 32 --compile      -Xcompiler "/EHsc /nologo /Od /Zi  /MD " -o "C:\Users\gundeep\Downloads\Project2-Pathtracer\PROJ1_WIN\565Raytracer\Win32/Release/raytraceKernel.cu.obj" "C:\Users\gundeep\Downloads\Project2-Pathtracer\src\raytraceKernel.cu"
+         cmd.exe /C "C:\Users\gundeep\AppData\Local\Temp\6170f3eb55cb4bb7999844c7c0d2f179.cmd"
+         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"    --keep-dir "Release" -maxrregcount=0  --machine 32 --compile      -Xcompiler "/EHsc /nologo /Od /Zi  /MD " -o "G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Release/raytraceKernel.cu.obj" "G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu"
          
-         C:\Users\gundeep\Downloads\Project2-Pathtracer\PROJ1_WIN\565Raytracer>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"    --keep-dir "Release" -maxrregcount=0  --machine 32 --compile      -Xcompiler "/EHsc /nologo /Od /Zi  /MD " -o "C:\Users\gundeep\Downloads\Project2-Pathtracer\PROJ1_WIN\565Raytracer\Win32/Release/raytraceKernel.cu.obj" "C:\Users\gundeep\Downloads\Project2-Pathtracer\src\raytraceKernel.cu" 
+         G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"    --keep-dir "Release" -maxrregcount=0  --machine 32 --compile      -Xcompiler "/EHsc /nologo /Od /Zi  /MD " -o "G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Release/raytraceKernel.cu.obj" "G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu" 
          raytraceKernel.cu
-     1>C:/Users/gundeep/Downloads/Project2-Pathtracer/src/raytraceKernel.cu(98): warning : variable "dof" was declared but never referenced
+     1>G:/Upenn_assignments/CIS 565 GPU programming/FINAL_Project_PAthtracer_extended/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(105): warning : variable "dof" was declared but never referenced
          
-         tmpxft_00001190_00000000-0_raytraceKernel.cudafe1.gpu
-         tmpxft_00001190_00000000-5_raytraceKernel.cudafe2.gpu
+     1>G:/Upenn_assignments/CIS 565 GPU programming/FINAL_Project_PAthtracer_extended/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(262): warning : variable "t" was declared but never referenced
+         
+     1>G:/Upenn_assignments/CIS 565 GPU programming/FINAL_Project_PAthtracer_extended/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(372): warning : variable "t" was declared but never referenced
+         
+         tmpxft_0000178c_00000000-0_raytraceKernel.cudafe1.gpu
+         tmpxft_0000178c_00000000-5_raytraceKernel.cudafe2.gpu
          raytraceKernel.cu
-     1>c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_swizzle.hpp(194): warning : missing return statement at end of non-void function "glm::detail::_swizzle_base2<ValueType, VecType, N, E0, E1, E2, E3, 1>::operator=(const glm::detail::_swizzle_base2<ValueType, VecType, N, E0, E1, E2, E3, 1>::Stub &)"
+     1>g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_swizzle.hpp(194): warning : missing return statement at end of non-void function "glm::detail::_swizzle_base2<ValueType, VecType, N, E0, E1, E2, E3, 1>::operator=(const glm::detail::_swizzle_base2<ValueType, VecType, N, E0, E1, E2, E3, 1>::Stub &)"
          
-     1>C:/Users/gundeep/Downloads/Project2-Pathtracer/src/raytraceKernel.cu(98): warning : variable "dof" was declared but never referenced
+     1>G:/Upenn_assignments/CIS 565 GPU programming/FINAL_Project_PAthtracer_extended/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(105): warning : variable "dof" was declared but never referenced
          
-         tmpxft_00001190_00000000-0_raytraceKernel.cudafe1.cpp
-         tmpxft_00001190_00000000-11_raytraceKernel.ii
+     1>G:/Upenn_assignments/CIS 565 GPU programming/FINAL_Project_PAthtracer_extended/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(262): warning : variable "t" was declared but never referenced
+         
+     1>G:/Upenn_assignments/CIS 565 GPU programming/FINAL_Project_PAthtracer_extended/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(372): warning : variable "t" was declared but never referenced
+         
+         tmpxft_0000178c_00000000-0_raytraceKernel.cudafe1.cpp
+         tmpxft_0000178c_00000000-11_raytraceKernel.ii
        ClCompile:
          All outputs are up-to-date.
          All outputs are up-to-date.
        Link:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\gundeep\Downloads\Project2-Pathtracer\PROJ1_WIN\Release\565Raytracer.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:../shared/glew/lib /LIBPATH:../shared/freeglut/lib /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\lib\Win32" cudart.lib glew32.lib glu32.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\565Raytracer.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\gundeep\Downloads\Project2-Pathtracer\PROJ1_WIN\Release\565Raytracer.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\gundeep\Downloads\Project2-Pathtracer\PROJ1_WIN\Release\565Raytracer.lib" /MACHINE:X86 "C:\Users\gundeep\Downloads\Project2-Pathtracer\PROJ1_WIN\565Raytracer\Win32/Release/raytraceKernel.cu.obj"
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\Release\565Raytracer.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:../shared/glew/lib /LIBPATH:../shared/freeglut/lib /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\lib\Win32" cudart.lib glew32.lib glu32.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\565Raytracer.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\Release\565Raytracer.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\Release\565Raytracer.lib" /MACHINE:X86 "G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Release/raytraceKernel.cu.obj"
          Release\glslUtility.obj
          Release\image.obj
          Release\main.obj
+         Release\obj.obj
+         Release\objloader.obj
          Release\scene.obj
          Release\stb_image.obj
          Release\stb_image_write.obj
          Release\utilities.obj
          Generating code
          Finished generating code
-         565Raytracer.vcxproj -> C:\Users\gundeep\Downloads\Project2-Pathtracer\PROJ1_WIN\Release\565Raytracer.exe
+         565Raytracer.vcxproj -> G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\Release\565Raytracer.exe
        Manifest:
-         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\gundeep\Downloads\Project2-Pathtracer\PROJ1_WIN\Release\565Raytracer.exe;#1" /manifest Release\565Raytracer.exe.intermediate.manifest
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\Release\565Raytracer.exe;#1" /manifest Release\565Raytracer.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Release\565Raytracer.unsuccessfulbuild".
          Touching "Release\565Raytracer.lastbuildstate".
-     1>Done Building Project "C:\Users\gundeep\Downloads\Project2-Pathtracer\PROJ1_WIN\565Raytracer\565Raytracer.vcxproj" (build target(s)).
+     1>Done Building Project "G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\565Raytracer.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:24.02
+Time Elapsed 00:00:15.13

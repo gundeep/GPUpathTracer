@@ -26,7 +26,7 @@ __host__ __device__ float sphereIntersectionTest(staticGeom sphere, ray r, glm::
 __host__ __device__ glm::vec3 getRandomPointOnCube(staticGeom cube, float randomSeed);
 
 //Handy dandy little hashing function that provides seeds for random number generation
-__host__ __device__ unsigned int hash(unsigned int a){
+__host__ __device__ unsigned int hash1(unsigned int a){
     a = (a+0x7ed55d16) + (a<<12);
     a = (a^0xc761c23c) ^ (a>>19);
     a = (a+0x165667b1) + (a<<5);
@@ -80,6 +80,147 @@ __host__ __device__ glm::vec3 getSignOfRay(ray r){
 //Wrapper for cube intersection test for testing against unit cubes
 __host__ __device__  float boxIntersectionTest(staticGeom box, ray r, glm::vec3& intersectionPoint, glm::vec3& normal){
   return boxIntersectionTest(glm::vec3(-.5,-.5,-.5), glm::vec3(.5,.5,.5), box, r, intersectionPoint, normal);
+}
+
+
+__host__ __device__ double Test_RayPlaneIntersect(glm::vec3 origin, glm::vec3 direction, glm::vec3 const& p, glm::vec3 const& normal)
+{
+	// If the ray is parallel to the  plane and there are either no solutions or an infinite number (line in plane).
+	// Returning -1 in that case
+	double dotProd = glm::dot(normal, direction);
+	if (dotProd == 0.0)
+		return -1;
+
+	double t = glm::dot(normal, (p-origin)) / dotProd;
+
+	// No intersectionin the viewing direction if t is -ve
+	if (abs(t) < 1e-3) // on the surface
+		return 0;
+	else if (t < 0.0)
+		return -1;
+
+	return t;
+}
+
+
+__host__ __device__ double RayTriangleIntersect(staticGeom mesh, ray const& r, glm::vec3 const& p1, glm::vec3 const& p2, glm::vec3 const& p3,
+	glm::vec3 normal, glm::vec3& intersectionPoint, glm::vec3& surfaceNormal)
+{
+	//glm::vec4 P0hom = glm::inverse(T) * glm::vec4(P0, 1.0f);
+	//glm::vec4 V0hom = glm::inverse(T) * glm::vec4(V0, 0.0f);
+	
+	glm::vec3 P0hom = multiplyMV(mesh.inverseTransform, glm::vec4(r.origin, 1.0f));
+	glm::vec3 V0hom = multiplyMV(mesh.inverseTransform, glm::vec4(glm::normalize(r.direction), 0.0f));
+
+	//glm::vec4 Rd = glm::vec4(V0hom.x, V0hom.y, V0hom.z, 0.0f);
+
+	if (p1 == p2 || p2 == p3 || p3 == p1)
+	{
+		// If any of the points are the same, then return no intersection
+		return -1;
+	}
+
+	glm::vec3 s; // s is a point on the plane
+	if (p1.x == 0.0f && p1.y == 0.0f && p1.z == 0.0f)
+		s = p2;
+	else
+		s = p1;
+
+	//std::vector<glm::vec3> points;
+	//points.push_back(p1);
+	//points.push_back(p2);
+	//points.push_back(p3);
+	//glm::vec3 normal = Helper::CalculateNormals(points);
+	glm::vec4 N = glm::vec4(normal, 0.0f);
+	surfaceNormal = glm::normalize(multiplyMV(mesh.tranposeTranform, glm::vec4(normal,0.0)));
+	//surfaceNormal.x = surNormalTemp.x; surfaceNormal.y = surNormalTemp.y; surfaceNormal.z = surNormalTemp.z;
+
+	// If the ray is parallel to the  plane and there are either no solutions or an infinite number (line in plane).
+	// Returning -1 in that case
+	double dotProd = glm::dot(normal, V0hom);
+	if (dotProd == 0.0)
+		return -1;
+
+	double t = Test_RayPlaneIntersect(P0hom, V0hom, s, normal);
+
+	// No intersectionin the viewing direction if t is -ve
+	if (t <= 0.0)
+		return -1;
+	if (abs(t) < 1e-3) // on the surface
+		return -1;
+
+	glm::vec3 p = P0hom + V0hom*(float)t;
+	intersectionPoint = r.origin + r.direction*(float)t;
+
+	/*s = area(ΔP1P2P3)
+	s1 = area(ΔPP2P3) / s
+	s2 = area(ΔPP3P1) / s
+	s3 = area(ΔPP1P2) / s*/
+
+	// Find area of triangle - P1-P2-P3
+	glm::mat3 matrix1 = glm::mat3(p1.y, p1.z, 1,
+		p2.y, p2.z, 1,
+		p3.y, p3.z, 1);
+	glm::mat3 matrix2 = glm::mat3(p1.z, p1.x, 1,
+		p2.z, p2.x, 1,
+		p3.z, p3.x, 1);
+	glm::mat3 matrix3 = glm::mat3(p1.x, p1.y, 1,
+		p2.x, p2.y, 1,
+		p3.x, p3.y, 1);
+	double sArea = 0.5*std::sqrt(std::pow(glm::determinant(matrix1),2) + std::pow(glm::determinant(matrix2),2) + std::pow(glm::determinant(matrix3),2));
+
+	// Find area of triangle - P-P2-P3
+	matrix1 = glm::mat3(p.y, p.z, 1,
+		p2.y, p2.z, 1,
+		p3.y, p3.z, 1);
+	matrix2 = glm::mat3(p.z, p.x, 1,
+		p2.z, p2.x, 1,
+		p3.z, p3.x, 1);
+	matrix3 = glm::mat3(p.x, p.y, 1,
+		p2.x, p2.y, 1,
+		p3.x, p3.y, 1);
+	double s1Area = 0.5*std::sqrt(std::pow(glm::determinant(matrix1),2) + std::pow(glm::determinant(matrix2),2) + std::pow(glm::determinant(matrix3),2))/sArea;
+
+	// Find area of triangle - P-P3-P1
+	matrix1 = glm::mat3(p.y, p.z, 1,
+		p3.y, p3.z, 1,
+		p1.y, p1.z, 1);
+	matrix2 = glm::mat3(p.z, p.x, 1,
+		p3.z, p3.x, 1,
+		p1.z, p1.x, 1);
+	matrix3 = glm::mat3(p.x, p.y, 1,
+		p3.x, p3.y, 1,
+		p1.x, p1.y, 1);
+	double s2Area = 0.5*std::sqrt(std::pow(glm::determinant(matrix1),2) + std::pow(glm::determinant(matrix2),2) + std::pow(glm::determinant(matrix3),2))/sArea;
+
+	// Find area of triangle - P-P1-P2
+	matrix1 = glm::mat3(p.y, p.z, 1,
+		p1.y, p1.z, 1,
+		p2.y, p2.z, 1);
+	matrix2 = glm::mat3(p.z, p.x, 1,
+		p1.z, p1.x, 1,
+		p2.z, p2.x, 1);
+	matrix3 = glm::mat3(p.x, p.y, 1,
+		p1.x, p1.y, 1,
+		p2.x, p2.y, 1);
+	double s3Area = 0.5*std::sqrt(std::pow(glm::determinant(matrix1),2) + std::pow(glm::determinant(matrix2),2) + std::pow(glm::determinant(matrix3),2))/sArea;
+
+	/*P is inside if
+	0 ≤ s1 ≤ 1
+	0 ≤ s2 ≤ 1
+	0 ≤ s3 ≤ 1
+	s1 + s2 + s3 = 1*/
+	if ((s1Area >= 0.0 && s1Area <= 1.0)
+		&& (s2Area >= 0.0 && s2Area <= 1.0)
+		&& (s3Area >= 0.0 && s3Area <= 1.0)
+		&& ((s1Area + s2Area + s3Area) >= 1.0 - 1e-3)
+		&& ((s1Area + s2Area + s3Area) <= 1.0 + 1e-3))
+	{
+		// Point is inside the triangle
+		return t;
+	}
+
+	return -1;
 }
 
 //Cube intersection test, return -1 if no intersection, otherwise, distance to intersection
@@ -447,7 +588,7 @@ __host__ __device__ glm::vec3 getRadiuses(staticGeom geom){
 //Generates a random point on a given cube
 __host__ __device__ glm::vec3 getRandomPointOnCube(staticGeom cube, float randomSeed){
 
-    thrust::default_random_engine rng(hash(randomSeed));
+    thrust::default_random_engine rng(hash1(randomSeed));
     thrust::uniform_real_distribution<float> u01(0,1);
     thrust::uniform_real_distribution<float> u02(-0.5,0.5);
 
@@ -493,7 +634,7 @@ __host__ __device__ glm::vec3 getRandomPointOnCube(staticGeom cube, float random
 __host__ __device__ glm::vec3 getRandomPointOnSphere(staticGeom sphere, float randomSeed){
 
   float radius=.5f;
-  thrust::default_random_engine rng(hash(randomSeed));
+  thrust::default_random_engine rng(hash1(randomSeed));
   thrust::uniform_real_distribution<float> u01(0,1);
   thrust::uniform_real_distribution<float> u02(-0.5,0.5);
 

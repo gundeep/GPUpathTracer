@@ -31,8 +31,71 @@
 #include "raytraceKernel.h"
 #include "utilities.h"
 #include "scene.h"
+#include "obj.h"
+#include "objloader.h"
+
+//#include "Utility_AO.h"
+
+
 
 using namespace std;
+//-------------------------------
+//----------Ambient Occlusion Stuff-----------
+//-------------------------------
+
+//float FARP = 1000.0f;
+//float	NEARP = 1.0f;
+//namespace quad_attributes {
+//	enum {
+//		POSITION,
+//		TEXCOORD
+//	};
+//}
+//
+//typedef struct {
+//	unsigned int vertex_array;
+//	unsigned int vbo_indices;
+//	unsigned int num_indices;
+//	//Don't need these to get it working, but needed for deallocation
+//	unsigned int vbo_data;
+//} device_mesh2_t;
+//
+//
+//typedef struct {
+//	glm::vec3 pt;
+//	glm::vec2 texcoord;
+//} vertex2_t;
+//
+//enum Display {
+//	DISPLAY_DEPTH = 0,
+//	DISPLAY_NORMAL = 1,
+//	DISPLAY_POSITION = 2,
+//	DISPLAY_OCCLUSION = 3,
+//	DISPLAY_TOTAL = 4
+//}	;
+//
+//enum Occlusion {
+//	OCCLUSION_NONE = 0,
+//	OCCLUSION_REGULAR_SAMPLES = 1,
+//	OCCLUSION_POISSON_SS_SAMPLES = 2,
+//	OCCLUSION_WORLD_SPACE_SAMPLES = 3
+//};
+
+
+//-------------------------------
+//----------Mesh/Obj Loader-----------
+//-------------------------------
+
+obj *mesh;
+float* vbo;
+float* nbo;
+int nbosize;
+int vbosize;
+float* cbo;
+int cbosize;
+int* ibo;
+int ibosize;
+
 
 //-------------------------------
 //----------PATHTRACER-----------

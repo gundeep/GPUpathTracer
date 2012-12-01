@@ -253,12 +253,12 @@ ROTAT       0 90 0
 SCALE       .01 10 10
 
 OBJECT 10
-cube
-material 8 
+C:\Users\gundeep\Desktop\pyramid.obj
+material 3 
 frame 0
-TRANS       0 10 8
+TRANS       0 0 3
 ROTAT       0 0 90
-SCALE       .3 4 4
+SCALE       2 3 3
 frame 1
 TRANS       0 10 0
 ROTAT       0 0 90

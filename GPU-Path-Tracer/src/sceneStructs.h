@@ -20,6 +20,17 @@ struct ray {
 	int index_ray;
 	bool useful;
 };
+struct triangle {
+  glm::vec3 p0;
+  glm::vec3 p1;
+  glm::vec3 p2;
+  glm::vec3 c0;
+  glm::vec3 c1;
+  glm::vec3 c2;
+  glm::vec3 n1;
+  glm::vec3 n2;
+  glm::vec3 n0;
+};
 
 struct geom {
 	enum GEOMTYPE type;

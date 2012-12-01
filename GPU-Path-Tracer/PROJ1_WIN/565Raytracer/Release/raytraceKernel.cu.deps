@@ -634,127 +634,127 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\thrust/iterator/
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\thrust/detail/device/cuda/copy_if.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\thrust/detail/device/cuda/copy_if.inl
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\cuda.h
-c:\users\gundeep\downloads\project2-pathtracer\src\sceneStructs.h
-c:\users\gundeep\downloads\project2-pathtracer\src\glm/glm.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core/_fixes.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core/setup.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/_detail.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\setup.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\sceneStructs.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm/glm.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core/_fixes.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core/setup.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/_detail.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\setup.hpp
 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cassert
 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\assert.h
 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\crtdefs.h
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/type.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_half.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_half.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_detail.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_float.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_half.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\setup.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_int.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\setup.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_detail.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_gentype.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_size.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec1.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_gentype.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_float.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_int.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_size.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_swizzle.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_swizzle_func.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec1.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec2.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_float.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_int.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_size.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_swizzle.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec2.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec3.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_float.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_int.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_size.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_swizzle.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec3.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec4.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_float.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_int.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_size.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_swizzle.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_vec4.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat2x2.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_gentype.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat2x2.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat2x3.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat2x3.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat2x4.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat2x4.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat3x2.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat3x2.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat3x3.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat3x3.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat3x4.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat3x4.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat4x2.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat4x2.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat4x3.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat4x3.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat4x4.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\type_mat4x4.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/func_trigonometric.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\func_trigonometric.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_vectorize.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/func_exponential.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\func_exponential.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_vectorize.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/func_common.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_fixes.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\func_common.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_vectorize.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/func_packing.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\func_packing.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/func_geometric.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\func_geometric.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_vectorize.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/func_matrix.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\func_matrix.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_vectorize.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/func_vector_relational.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_detail.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\func_vector_relational.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/func_integer.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\func_integer.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\_vectorize.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/func_noise.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core\func_noise.inl
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\./core/_swizzle.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\cudaMat4.h
-c:\users\gundeep\downloads\project2-pathtracer\src\glm/glm.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core/_fixes.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/type.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_half.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_half.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_detail.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_float.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_half.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\setup.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_int.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\setup.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_detail.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_gentype.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_size.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec1.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_gentype.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_float.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_int.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_size.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_swizzle.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_swizzle_func.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec1.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec2.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_float.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_int.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_size.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_swizzle.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec2.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec3.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_float.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_int.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_size.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_swizzle.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec3.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec4.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_float.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_int.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_size.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_swizzle.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec4.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat2x2.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_gentype.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat2x2.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat2x3.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat2x3.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat2x4.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat2x4.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat3x2.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat3x2.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat3x3.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat3x3.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat3x4.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat3x4.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat4x2.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat4x2.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat4x3.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat4x3.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat4x4.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat4x4.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/func_trigonometric.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\func_trigonometric.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_vectorize.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/func_exponential.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\func_exponential.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_vectorize.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/func_common.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_fixes.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\func_common.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_vectorize.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/func_packing.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\func_packing.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/func_geometric.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\func_geometric.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_vectorize.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/func_matrix.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\func_matrix.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_vectorize.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/func_vector_relational.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_detail.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\func_vector_relational.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/func_integer.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\func_integer.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\_vectorize.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/func_noise.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core\func_noise.inl
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\./core/_swizzle.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\cudaMat4.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm/glm.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core/_fixes.hpp
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\cuda_runtime.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\cuda_runtime.h
 C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc\cutil_math.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\cuda_runtime.h
 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\math.h
-c:\users\gundeep\downloads\project2-pathtracer\src\utilities.h
-c:\users\gundeep\downloads\project2-pathtracer\src\glm/glm.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core/_fixes.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\utilities.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm/glm.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core/_fixes.hpp
 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\sstream
 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\vector
-c:\users\gundeep\downloads\project2-pathtracer\src\cudaMat4.h
-c:\users\gundeep\downloads\project2-pathtracer\src\raytraceKernel.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\cudaMat4.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\raytraceKernel.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\thrust/random.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\thrust/detail/cstdint.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\thrust/random/discard_block_engine.h
@@ -781,15 +781,16 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\thrust/random/de
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\thrust/random/normal_distribution.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\thrust/random/detail/normal_distribution.inl
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include\cuda.h
-c:\users\gundeep\downloads\project2-pathtracer\src\sceneStructs.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\sceneStructs.h
 C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc\cutil_math.h
-c:\users\gundeep\downloads\project2-pathtracer\src\intersections.h
-c:\users\gundeep\downloads\project2-pathtracer\src\sceneStructs.h
-c:\users\gundeep\downloads\project2-pathtracer\src\cudaMat4.h
-c:\users\gundeep\downloads\project2-pathtracer\src\glm/glm.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core/_fixes.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\utilities.h
-c:\users\gundeep\downloads\project2-pathtracer\src\interactions.h
-c:\users\gundeep\downloads\project2-pathtracer\src\intersections.h
-c:\users\gundeep\downloads\project2-pathtracer\src\glm/glm.hpp
-c:\users\gundeep\downloads\project2-pathtracer\src\glm\core/_fixes.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\obj.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\glm.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core/_fixes.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\intersections.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\sceneStructs.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\cudaMat4.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm/glm.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\glm\core/_fixes.hpp
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\utilities.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\interactions.h
+g:\upenn_assignments\cis 565 gpu programming\final_project_pathtracer_extended\gpupathtracer\gpu-path-tracer\src\intersections.h

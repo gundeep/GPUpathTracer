@@ -16,7 +16,14 @@
 #include "intersections.h"
 #include "interactions.h"
 #include <vector>
-#include "glm/glm.hpp"
+//#include "obj.h:
+//#include "glm/glm.hpp"
+
+float* device_vbo;
+float* device_cbo;
+int* device_ibo;
+float* device_nbo;
+triangle* primitives;
 
 
  struct isNegative
@@ -41,7 +48,7 @@ void checkCUDAError(const char *msg) {
 __host__ __device__ glm::vec3 generateRandomNumberFromThread(glm::vec2 resolution, float time, int x, int y){
   int index = x + (y * resolution.x);
    
-  thrust::default_random_engine rng(hash(index*time));
+  thrust::default_random_engine rng(hash1(index*time));
   thrust::uniform_real_distribution<float> u01(0,1);
 
   return glm::vec3((float) u01(rng), (float) u01(rng), (float) u01(rng));
@@ -49,7 +56,7 @@ __host__ __device__ glm::vec3 generateRandomNumberFromThread(glm::vec2 resolutio
 __host__ __device__ glm::vec3 generateRandomNumberFromThread2(glm::vec2 resolution, float time, int x, int y){
   int index = x + (y * resolution.x);
    
-  thrust::default_random_engine rng(hash(index*time));
+  thrust::default_random_engine rng(hash1(index*time));
   thrust::uniform_real_distribution<float> u01(-0.5,0.5);
 
   return glm::vec3((float) u01(rng), (float) u01(rng), (float) u01(rng));
@@ -185,13 +192,16 @@ __global__ void sendImageToPBO(uchar4* PBOpos, glm::vec2 resolution, glm::vec3* 
 //Core raytracer kernel
 __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, int rayDepth, glm::vec3* colors, 
                             staticGeom* geoms, int numberOfGeoms, material* materials, int numberOfMaterials,
-							glm::vec3* renderimage, ray* raybundle, int bounces, glm::vec3* temp)
+							glm::vec3* renderimage, ray* raybundle, int bounces, glm::vec3* temp, obj* cudameshes,
+							int numberofmeshes, float *device_vbo, float vbosize, triangle* faces, float* device_nbo, int nbosize)
 {
 
   int x = (blockIdx.x * blockDim.x) + threadIdx.x;
   int y = (blockIdx.y * blockDim.y) + threadIdx.y;
   int index = x + (y * resolution.x);
-  
+
+
+   
   if (raybundle[index].useful)
   {
   glm::vec3 old_color= glm::vec3(0,0,0);
@@ -211,7 +221,7 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 		Object_number=0;
 		glm::vec3 POI;
 		//printf("\n%f  index", raybundle[index].index_ray);
-		for(int i=0; i<numberOfGeoms; i++)
+		for(int i=0; i<=numberOfGeoms; i++)
 		{
 			glm::vec3 intersectionPoint;
 			glm::vec3 intersectionNormal;
@@ -243,6 +253,32 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 					}
 				}
 			}
+
+			else if( geoms[i].type==MESH)
+			{
+				//printf("okay in mesh");
+				for ( int j=0; j<vbosize/9; ++j)
+				{
+					float t = -1;
+					glm::vec3 temp_intersectionPoint;
+					glm::vec3 temp_normal;
+					
+					depth = RayTriangleIntersect(geoms[i], raybundle[index], faces[j].p0,faces[j].p1,faces[j].p2,
+						faces[j].n0,intersectionPoint, temp_normal);
+					if (depth>-EPSILON)
+					{
+						if (tmin<=EPSILON || depth<tmin+EPSILON)
+						{
+							tmin=depth;
+							POI=intersectionPoint;
+							normal=temp_normal;//intersectionNormal;
+							Object_number=i;
+						}
+					}
+				}
+				
+			}
+
 		}
 				
 		if(tmin<EPSILON)
@@ -326,6 +362,32 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 							}
 						}
 					}
+					
+					else if( geoms[i].type==MESH)
+					{
+						//printf("okay in mesh");
+						//hack
+						for ( int j=0; j<vbosize/9; ++j)
+						{
+							float t = -1;
+							glm::vec3 temp_intersectionPoint;
+							glm::vec3 temp_normal;
+					
+							depth = RayTriangleIntersect(geoms[i], raybundle[index], faces[j].p0,faces[j].p1,faces[j].p2,
+								faces[j].n0,intersectionPoint, temp_normal);
+							if (depth>-EPSILON)
+							{
+								if (tmin<=EPSILON || depth<tmin+EPSILON)
+								{
+									tmin=depth;
+									POI=intersectionPoint;
+									normal=temp_normal;//intersectionNormal;
+									Object_number=i;
+								}
+							}
+						}
+				
+					}
 				}
 
 				 // when the light is going out of object
@@ -359,7 +421,6 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 				raybundle[index].direction=(random_direction);
 				raybundle[index].origin=POI;
 			 
-
 				if (bounces==1)
 				{
 					 temp[raybundle[index].index_ray]=materials[geoms[Object_number].materialid].color;
@@ -379,7 +440,10 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 
 //TODO: FINISH THIS FUNCTION
 // Wrapper for the __global__ call that sets up the kernel calls and does a ton of memory management
-void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iterations, material* materials, int numberOfMaterials, geom* geoms, int numberOfGeoms){
+void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iterations,
+					material* materials, int numberOfMaterials, geom* geoms, int numberOfGeoms,
+					float* vbo, float* nbo,float* cbo, int vbosize, int nbosize,int cbosize, obj* objs, int numberofmeshes,
+					int number_of_faces, triangle* tri_faces, int* ibo, int ibosize){
   
   int traceDepth = 1; //determines how many bounces the raytracer traces
   int bounces=0;
@@ -442,6 +506,33 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
   cam.fov = renderCam->fov;
   //cam.image=renderCam->image;
   
+  obj* cudaobjs=NULL;
+  cudaMalloc((void**)&cudaobjs, numberofmeshes*sizeof(obj));
+  cudaMemcpy(cudaobjs, objs, numberofmeshes*sizeof(obj), cudaMemcpyHostToDevice);  
+
+
+  //------------------------------
+  //memory stuff
+  //------------------------------
+  primitives = NULL;
+  cudaMalloc((void**)&primitives, (ibosize/3)*sizeof(triangle));
+  cudaMemcpy(primitives,tri_faces, (ibosize/3)*sizeof(triangle),cudaMemcpyHostToDevice);
+
+  device_ibo = NULL;
+  cudaMalloc((void**)&device_ibo, ibosize*sizeof(int));
+  cudaMemcpy( device_ibo, ibo, ibosize*sizeof(int), cudaMemcpyHostToDevice);
+
+  device_nbo =NULL;
+  cudaMalloc ((void**)&device_nbo, nbosize*sizeof(float));
+  cudaMemcpy(device_nbo, nbo, nbosize*sizeof(float),cudaMemcpyHostToDevice);
+
+  device_vbo = NULL;
+  cudaMalloc((void**)&device_vbo, vbosize*sizeof(float));
+  cudaMemcpy( device_vbo, vbo, vbosize*sizeof(float), cudaMemcpyHostToDevice);
+
+  device_cbo = NULL;
+  cudaMalloc((void**)&device_cbo, cbosize*sizeof(float));
+
   //kernel call for camera rays
   
 	raycastFromCameraKernel<<<fullBlocksPerGrid, threadsPerBlock>>>( renderCam->resolution, (float)iterations, cam.position, cam.view, cam.up, cam.fov, raypacket, temp_color);
@@ -452,8 +543,9 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
 		bounces++;
 		dim3 fullBlockPerGridSC((int)ceil(float(renderCam->resolution.x)/float(tileSize)), ((int)activerays)/(float(tileSize)*(int)ceil(float(renderCam->resolution.x))));
 	   
-		raytraceRay<<<fullBlockPerGridSC, threadsPerBlock>>>(renderCam->resolution, (float)iterations, cam, traceDepth, cudaimage, cudageoms, numberOfGeoms, cudamaterials, 
-	   																			numberOfMaterials,renderimage, raypacket,bounces,temp_color);
+		raytraceRay<<<fullBlockPerGridSC, threadsPerBlock>>>(renderCam->resolution, (float)iterations, cam, traceDepth, 
+			cudaimage, cudageoms, numberOfGeoms, cudamaterials,numberOfMaterials,renderimage,
+			raypacket,bounces,temp_color, cudaobjs, numberofmeshes,device_vbo,vbosize,primitives, device_nbo, nbosize);
 		thrust::device_ptr<ray> devicePointer(raypacket);
 		thrust::device_ptr<ray> newEnd=thrust::remove_if(devicePointer,devicePointer+activerays, isNegative());
 		activerays= newEnd.get() - devicePointer.get();
@@ -475,6 +567,12 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
   cudaFree(cudamaterials);
   cudaFree(renderimage);
   cudaFree(temp_color);
+  cudaFree(cudaobjs);
+  cudaFree( device_vbo );
+  cudaFree( device_cbo );
+  cudaFree( device_ibo );
+  cudaFree( device_nbo );
+  cudaFree(primitives);
   delete [] geomList;
 
   // make certain the kernel has completed 

@@ -7,6 +7,177 @@
 
 #include "main.h"
 
+
+
+//// ALL the Ambient Occlusion Stuff
+//GLuint depthTexture = 0;
+//GLuint normalTexture = 0;
+//GLuint positionTexture = 0;
+//GLuint FBO = 0;
+//GLuint random_normal_tex;
+//GLuint random_scalar_tex;
+//
+//GLuint ssao_prog;
+//  void initSSAO()
+//  {
+//	Utility::shaders_t shaders = Utility::loadShaders("shaders/ssao.vert", "shaders/ssao.frag");
+//    ssao_prog = glCreateProgram();
+//	glBindAttribLocation(ssao_prog, quad_attributes::POSITION, "Position");
+//	glBindAttribLocation(ssao_prog, quad_attributes::TEXCOORD, "Texcoord");
+// 
+//	Utility::attachAndLinkProgram(ssao_prog, shaders);
+//  }
+//
+//  device_mesh2_t device_quad;
+//void initQuad() {
+//	vertex2_t verts [] = { {glm::vec3(-1,1,0),glm::vec2(0,1)},
+//	{glm::vec3(-1,-1,0),glm::vec2(0,0)},
+//	{glm::vec3(1,-1,0), glm::vec2(1,0)},
+//	{glm::vec3(1,1,0),  glm::vec2(1,1)}};
+//
+//	unsigned short indices[] = { 0,1,2,0,2,3};
+//
+//	//Allocate vertex array
+//	//Vertex arrays encapsulate a set of generic vertex attributes and the buffers they are bound too
+//	//Different vertex array per mesh.
+//	glGenVertexArrays(1, &(device_quad.vertex_array));
+//    glBindVertexArray(device_quad.vertex_array);
+//
+//    
+//	//Allocate vbos for data
+//	glGenBuffers(1,&(device_quad.vbo_data));
+//	glGenBuffers(1,&(device_quad.vbo_indices));
+//    
+//	//Upload vertex data
+//	glBindBuffer(GL_ARRAY_BUFFER, device_quad.vbo_data);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+//    //Use of strided data, Array of Structures instead of Structures of Arrays
+//	glVertexAttribPointer(quad_attributes::POSITION, 3, GL_FLOAT, GL_FALSE,sizeof(vertex2_t),0);
+//	glVertexAttribPointer(quad_attributes::TEXCOORD, 2, GL_FLOAT, GL_FALSE,sizeof(vertex2_t),(void*)sizeof(glm::vec3));
+//	glEnableVertexAttribArray(quad_attributes::POSITION);
+//	glEnableVertexAttribArray(quad_attributes::TEXCOORD);
+//
+//    //indices
+//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, device_quad.vbo_indices);
+//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*sizeof(GLushort), indices, GL_STATIC_DRAW);
+//    device_quad.num_indices = 6;
+//	//Unplug Vertex Array
+//    glBindVertexArray(0);
+//}
+//
+//  enum Display display_type = DISPLAY_TOTAL;
+//  enum Occlusion occlusion_type = OCCLUSION_NONE;
+//void draw_quad() {
+//
+//    glUseProgram(ssao_prog);
+//
+//	glBindVertexArray(device_quad.vertex_array);
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, device_quad.vbo_indices);
+//
+//    glEnable(GL_TEXTURE_2D);
+//
+//	glm::mat4 persp = glm::perspective(45.0f,1.0f,FARP,NEARP);
+//    glm::vec4 test(-2,0,10,1);
+//    glm::vec4 testp = persp * test;
+//    glm::vec4 testh = testp / testp.w;
+//    glm::vec2 coords = glm::vec2(testh.x, testh.y) / 2.0f + 0.5f;
+//    glUniform1i(glGetUniformLocation(ssao_prog, "u_ScreenHeight"), height);
+//    glUniform1i(glGetUniformLocation(ssao_prog, "u_ScreenWidth"), width);
+//    glUniform1f(glGetUniformLocation(ssao_prog, "u_Far"), FARP);
+//    glUniform1f(glGetUniformLocation(ssao_prog, "u_Near"), NEARP);
+//    glUniform1i(glGetUniformLocation(ssao_prog, "u_OcclusionType"), occlusion_type);
+//    glUniform1i(glGetUniformLocation(ssao_prog, "u_DisplayType"), display_type);
+//    glUniformMatrix4fv(glGetUniformLocation(ssao_prog, "u_Persp"),1, GL_FALSE, &persp[0][0] );
+//    
+//	glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, depthTexture);
+//    glUniform1i(glGetUniformLocation(ssao_prog, "u_Depthtex"),0);
+//    glActiveTexture(GL_TEXTURE1);
+//    glBindTexture(GL_TEXTURE_2D, normalTexture);
+//    glUniform1i(glGetUniformLocation(ssao_prog, "u_Normaltex"),1);
+//    glActiveTexture(GL_TEXTURE2);
+//    glBindTexture(GL_TEXTURE_2D, positionTexture);
+//    glUniform1i(glGetUniformLocation(ssao_prog, "u_Positiontex"),2);
+//    glActiveTexture(GL_TEXTURE3);
+//    glBindTexture(GL_TEXTURE_2D, random_normal_tex);
+//    glUniform1i(glGetUniformLocation(ssao_prog, "u_RandomNormaltex"),3);
+//    glActiveTexture(GL_TEXTURE4);
+//    glBindTexture(GL_TEXTURE_2D, random_scalar_tex);
+//    glUniform1i(glGetUniformLocation(ssao_prog, "u_RandomScalartex"),4);
+//    
+//    glDrawElements(GL_TRIANGLES, device_quad.num_indices, GL_UNSIGNED_SHORT,0);
+//
+//    glBindVertexArray(0);
+//}
+//int mouse_buttons = 0;
+//int mouse_old_x = 0;
+//int mouse_old_y = 0;
+//void mouse(int button, int state, int x, int y)
+//{
+//    if (state == GLUT_DOWN) {
+//        mouse_buttons |= 1<<button;
+//    } else if (state == GLUT_UP) {
+//        mouse_buttons = 0;
+//    }
+// 
+//    mouse_old_x = x;
+//    mouse_old_y = y;
+//}
+//Camera cam(glm::vec3(17,0,4),
+//		   glm::normalize(glm::vec3(-1,0,0)),
+//		   glm::normalize(glm::vec3(0,0,1)));
+//
+//void motion(int x, int y)
+//{
+//    float dx, dy;
+//    dx = (float)(x - mouse_old_x);
+//    dy = (float)(y - mouse_old_y);
+// 
+//    if (mouse_buttons & 1<<GLUT_RIGHT_BUTTON) {
+//		cam.adjust(0,0,dx,0,0,0);;
+//    }
+//    else {
+//        cam.adjust(-dx*0.2f,-dy*0.2f,0,0,0,0);
+//    }
+// 
+//    mouse_old_x = x;
+//    mouse_old_y = y;
+//}
+//void
+//Camera::adjust(float dx, // look left right
+//      float dy, //look up down
+//      float dz,
+//      float tx, //strafe left right
+//      float ty,
+//      float tz)//go forward) //strafe up down
+//{
+//
+//	if (abs(dx) > 0) {
+//		rx += dx;
+//        rx = fmod(rx,360.0f);
+//	}
+//
+//	if (abs(dy) > 0) {
+//        ry += dy;
+//        ry = clamp(ry,-70.0f, 70.0f);
+//	}
+//
+//	if (abs(tx) > 0) {
+//	//	glm::vec3 dir = glm::rotate_vector::rotate(start_dir,rx + 90,up);
+//      //  glm::vec2 dir2(dir.x,dir.y);
+//       // glm::vec2 mag = dir2 * tx;
+//      //  pos += mag;	
+//	}
+//
+//	if (abs(tz) > 0) {
+//		//glm::vec3 dir = glm::gtx::rotate_vector::rotate(start_dir,rx,up);
+//       // glm::vec2 dir2(dir.x,dir.y);
+//       // glm::vec2 mag = dir2 * tz;
+//       // pos += mag;
+//	}
+//}
+
+
 //-------------------------------
 //-------------MAIN--------------
 //-------------------------------
@@ -40,6 +211,7 @@ int main(int argc, char** argv){
       targetFrame = atoi(data.c_str());
       singleFrameMode = true;
     }
+	
   }
 
   if(!loadedScene){
@@ -70,12 +242,16 @@ int main(int argc, char** argv){
 
   initVAO();
   initTextures();
+  
 
   GLuint passthroughProgram;
   passthroughProgram = initShader("shaders/passthroughVS.glsl", "shaders/passthroughFS.glsl");
 
   glUseProgram(passthroughProgram);
   glActiveTexture(GL_TEXTURE0);
+
+  //initSSAO();
+  //initQuad();
 
   #ifdef __APPLE__
 	  // send into GLFW main loop
@@ -90,6 +266,8 @@ int main(int argc, char** argv){
   #else
 	  glutDisplayFunc(display);
 	  glutKeyboardFunc(keyboard);
+	 // glutMouseFunc(mouse);
+	  //glutMotionFunc(motion);
 
 	  glutMainLoop();
   #endif
@@ -108,22 +286,103 @@ void runCuda(){
   if(iterations<renderCam->iterations){
     uchar4 *dptr=NULL;
     iterations++;
-    cudaGLMapBufferObject((void**)&dptr, pbo);
-  
-    //pack geom and material arrays
+    cudaGLMapBufferObject((void**)&dptr, pbo);  // hmm pbo is program buffer
+
+	//////////////////////////////////////////  
+    ///////pack geom and material arrays//////
+	//////////////////////////////////////////
+
     geom* geoms = new geom[renderScene->objects.size()];
+	obj* objs= new obj[renderScene->meshes.size()];
     material* materials = new material[renderScene->materials.size()];
     
-    for(int i=0; i<renderScene->objects.size(); i++){
+    for(int i=0; i<renderScene->objects.size(); i++)
+	{
       geoms[i] = renderScene->objects[i];
     }
-    for(int i=0; i<renderScene->materials.size(); i++){
-      materials[i] = renderScene->materials[i];
+	for(int k=0; k<renderScene->meshes.size(); k++)
+	{
+		
+		objs[k]= renderScene->meshes[k];
+		//objs[0].faces
+		//cout<<"filling objs\n";
+	}
+    for(int j=0; j<renderScene->materials.size(); j++){
+      materials[j] = renderScene->materials[j];
     }
+
+	/////////////////////////////////////
+	////////// Mesh Loading /////////////
+	/////////////////////////////////////
+
+	vbo = renderScene->meshes[0].getVBO();
+	vbosize = renderScene->meshes[0].getVBOsize();
+
+	nbo = renderScene->meshes[0].getNBO();
+	nbosize= renderScene->meshes[0].getNBOsize();	
+
+	float newcbo[] = {0.0, 1.0, 0.0, 
+                    0.0, 0.0, 1.0, 
+                    1.0, 0.0, 0.0};
+	cbo = newcbo;
+	cbosize = 9;
+
+	ibo = renderScene->meshes[0].getIBO();
+	ibosize = renderScene->meshes[0].getIBOsize();
+
+	vector<vector<int>>* temp_faces= renderScene->meshes[0].getFaces();
+	//hack
+	int number_of_faces=ibosize/3;
+	triangle* tri_faces= new triangle[number_of_faces];
+
+	/*for(int i=0;i<108;i++)
+	{
+		cout<<vbo[i]<<"   \n";
+		if((i+1)%3==0)
+		{
+			cout<<"\n";
+		}
+	}*/
+
+	for( int i=0 ; i <number_of_faces ; i++)
+	{
+		// here P0 has the vertex index of 1 vertex of triangle
+		tri_faces[i].p0=glm::vec3(vbo[i*9],vbo[i*9 +1 ],vbo[i*9 +2]);
+		tri_faces[i].p1=glm::vec3(vbo[i*9 +3],vbo[i*9 +4],vbo[i*9 +5]);
+		tri_faces[i].p2=glm::vec3(vbo[i*9 + 6],vbo[i*9 + 7],vbo[i*9 + 8]);
+
+
+		tri_faces[i].n0=glm::vec3(nbo[i*9],    nbo[i*9 +1 ],nbo[i*9 +2]);
+		tri_faces[i].n1=glm::vec3(nbo[i*9 +3], nbo[i*9 +4], nbo[i*9 +5]);
+		tri_faces[i].n2=glm::vec3(nbo[i*9 + 6],nbo[i*9 + 7],nbo[i*9 + 8]);
+
+
+		////// NOTE This line is hacky, just to save the normal
+
+		tri_faces[i].n0=glm::normalize(tri_faces[i].n0+tri_faces[i].n1+tri_faces[i].n2);
+
+
+		//tri_faces[i].p0 = glm::vec3(vbo[3*temp_faces[0][i][0]],vbo[3*temp_faces[0][i][0] + 1],vbo[3*(temp_faces[0][i][0]) + 2]);
+		//tri_faces[i].p1 = glm::vec3(vbo[3*temp_faces[0][i][1]],vbo[3*temp_faces[0][i][1] + 1],vbo[3*(temp_faces[0][i][1]) + 2]);
+		//tri_faces[i].p2 = glm::vec3(vbo[3*temp_faces[0][i][2]],vbo[3*temp_faces[0][i][2] + 1],vbo[3*(temp_faces[0][i][2]) + 2]);
+		cout<"ok";
+		//tri_faces[i].p0= vbo[i*tri_faces[i].p0.x, i*tri_faces[i].p0.y,i*tri_faces[i].p0.z];
+	}
+	
+	//vbo[temp_faces[0][0][0]
+	/*for( int i=0 ; i <number_of_faces ; i++)
+	{
+	cout<<tri_faces[i].p0.x<<"	\n";
+	cout<<tri_faces[i].p1.x<<"	\n";
+	cout<<tri_faces[i].p2.x<<"	\n";
+	}*/
+
     
-  
-    // execute the kernel
-    cudaRaytraceCore(dptr, renderCam, targetFrame, iterations, materials, renderScene->materials.size(), geoms, renderScene->objects.size() );
+	// execute the kernel
+    cudaRaytraceCore(dptr, renderCam, targetFrame, iterations, materials,
+		renderScene->materials.size(), geoms, renderScene->objects.size(),
+		vbo,nbo,cbo,vbosize,nbosize,cbosize,objs, renderScene->meshes.size(), number_of_faces, tri_faces,
+		ibo,ibosize);
     
     // unmap buffer object
     cudaGLUnmapBufferObject(pbo);
@@ -172,7 +431,6 @@ void runCuda(){
       finishedRender = false;
     }
   }
-  
 }
 
 #ifdef __APPLE__
@@ -226,8 +484,32 @@ void runCuda(){
 		   case(27):
 			   exit(1);
 			   break;
-		}
+			/*
+			case('1'):
+			  occlusion_type = OCCLUSION_NONE;
+			  break;
+			case('2'):
+			  occlusion_type = OCCLUSION_REGULAR_SAMPLES;
+			  break;
+			case('6'):
+			  display_type = DISPLAY_DEPTH;
+			  break;
+			case('7'):
+			  display_type = DISPLAY_NORMAL;
+			  break;
+			case('8'):
+			  display_type = DISPLAY_POSITION;
+			  break;
+			case('9'):
+			  display_type = DISPLAY_OCCLUSION;
+			  break;
+			case('0'):
+			  display_type = DISPLAY_TOTAL;
+			  break;
+			}*/
 	}
+}
+	
 
 #endif
 

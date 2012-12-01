@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>scene="C:\Users\gundeep\Downloads\Project2-Pathtracer\scenes\sampleScene.txt"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>scene="G:\Upenn_assignments\CIS 565 GPU programming\FINAL_Project_PAthtracer_extended\GPUpathTracer\GPU-Path-Tracer\scenes\sampleScene.txt"</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

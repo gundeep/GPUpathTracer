@@ -13,6 +13,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include "objloader.h"
 
 using namespace std;
 
@@ -22,11 +23,14 @@ private:
     int loadMaterial(string materialid);
     int loadObject(string objectid);
     int loadCamera();
+	int loadMesh(string filename);
+
 public:
+	obj *mesh;
     scene(string filename);
     ~scene();
-
     vector<geom> objects;
+	vector<obj> meshes;
     vector<material> materials;
     camera renderCam;
 };
