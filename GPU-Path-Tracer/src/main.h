@@ -104,7 +104,7 @@ int ibosize;
 scene* renderScene;
 camera* renderCam;
 int targetFrame;
-int iterations;
+unsigned int iterations;
 bool finishedRender;
 bool singleFrameMode;
 

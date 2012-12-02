@@ -296,86 +296,90 @@ void runCuda(){
 	obj* objs= new obj[renderScene->meshes.size()];
     material* materials = new material[renderScene->materials.size()];
     
-    for(int i=0; i<renderScene->objects.size(); i++)
+    for(unsigned int i=0; i<renderScene->objects.size(); i++)
 	{
       geoms[i] = renderScene->objects[i];
     }
-	for(int k=0; k<renderScene->meshes.size(); k++)
+	for(unsigned int k=0; k<renderScene->meshes.size(); k++)
 	{
 		
 		objs[k]= renderScene->meshes[k];
 		//objs[0].faces
 		//cout<<"filling objs\n";
 	}
-    for(int j=0; j<renderScene->materials.size(); j++){
+    for(unsigned int j=0; j<renderScene->materials.size(); j++){
       materials[j] = renderScene->materials[j];
     }
 
 	/////////////////////////////////////
 	////////// Mesh Loading /////////////
 	/////////////////////////////////////
-
-	vbo = renderScene->meshes[0].getVBO();
-	vbosize = renderScene->meshes[0].getVBOsize();
-
-	nbo = renderScene->meshes[0].getNBO();
-	nbosize= renderScene->meshes[0].getNBOsize();	
-
-	float newcbo[] = {0.0, 1.0, 0.0, 
-                    0.0, 0.0, 1.0, 
-                    1.0, 0.0, 0.0};
-	cbo = newcbo;
-	cbosize = 9;
-
-	ibo = renderScene->meshes[0].getIBO();
-	ibosize = renderScene->meshes[0].getIBOsize();
-
-	vector<vector<int>>* temp_faces= renderScene->meshes[0].getFaces();
-	//hack
-	int number_of_faces=ibosize/3;
-	triangle* tri_faces= new triangle[number_of_faces];
-
-	/*for(int i=0;i<108;i++)
+	int number_of_faces;
+	triangle* tri_faces;
+	if (renderScene->meshes.size() >0)
 	{
-		cout<<vbo[i]<<"   \n";
-		if((i+1)%3==0)
+		vbo = renderScene->meshes[0].getVBO();
+		vbosize = renderScene->meshes[0].getVBOsize();
+
+		nbo = renderScene->meshes[0].getNBO();
+		nbosize= renderScene->meshes[0].getNBOsize();	
+
+		float newcbo[] = {0.0, 1.0, 0.0, 
+						0.0, 0.0, 1.0, 
+						1.0, 0.0, 0.0};
+		cbo = newcbo;
+		cbosize = 9;
+
+		ibo = renderScene->meshes[0].getIBO();
+		ibosize = renderScene->meshes[0].getIBOsize();
+
+		vector<vector<int>>* temp_faces= renderScene->meshes[0].getFaces();
+		//hack
+		number_of_faces=ibosize/3;
+		tri_faces= new triangle[number_of_faces];
+
+		/*for(int i=0;i<108;i++)
 		{
-			cout<<"\n";
+			cout<<vbo[i]<<"   \n";
+			if((i+1)%3==0)
+			{
+				cout<<"\n";
+			}
+		}*/
+
+		for( int i=0 ; i <number_of_faces ; i++)
+		{
+			// here P0 has the vertex index of 1 vertex of triangle
+			tri_faces[i].p0=glm::vec3(vbo[i*9],vbo[i*9 +1 ],vbo[i*9 +2]);
+			tri_faces[i].p1=glm::vec3(vbo[i*9 +3],vbo[i*9 +4],vbo[i*9 +5]);
+			tri_faces[i].p2=glm::vec3(vbo[i*9 + 6],vbo[i*9 + 7],vbo[i*9 + 8]);
+
+
+			tri_faces[i].n0=glm::vec3(nbo[i*9],    nbo[i*9 +1 ],nbo[i*9 +2]);
+			tri_faces[i].n1=glm::vec3(nbo[i*9 +3], nbo[i*9 +4], nbo[i*9 +5]);
+			tri_faces[i].n2=glm::vec3(nbo[i*9 + 6],nbo[i*9 + 7],nbo[i*9 + 8]);
+
+
+			////// NOTE This line is hacky, just to save the normal
+
+			tri_faces[i].n0=glm::normalize(tri_faces[i].n0+tri_faces[i].n1+tri_faces[i].n2);
+
+
+			//tri_faces[i].p0 = glm::vec3(vbo[3*temp_faces[0][i][0]],vbo[3*temp_faces[0][i][0] + 1],vbo[3*(temp_faces[0][i][0]) + 2]);
+			//tri_faces[i].p1 = glm::vec3(vbo[3*temp_faces[0][i][1]],vbo[3*temp_faces[0][i][1] + 1],vbo[3*(temp_faces[0][i][1]) + 2]);
+			//tri_faces[i].p2 = glm::vec3(vbo[3*temp_faces[0][i][2]],vbo[3*temp_faces[0][i][2] + 1],vbo[3*(temp_faces[0][i][2]) + 2]);
+			//cout<"ok";
+			//tri_faces[i].p0= vbo[i*tri_faces[i].p0.x, i*tri_faces[i].p0.y,i*tri_faces[i].p0.z];
 		}
-	}*/
-
-	for( int i=0 ; i <number_of_faces ; i++)
-	{
-		// here P0 has the vertex index of 1 vertex of triangle
-		tri_faces[i].p0=glm::vec3(vbo[i*9],vbo[i*9 +1 ],vbo[i*9 +2]);
-		tri_faces[i].p1=glm::vec3(vbo[i*9 +3],vbo[i*9 +4],vbo[i*9 +5]);
-		tri_faces[i].p2=glm::vec3(vbo[i*9 + 6],vbo[i*9 + 7],vbo[i*9 + 8]);
-
-
-		tri_faces[i].n0=glm::vec3(nbo[i*9],    nbo[i*9 +1 ],nbo[i*9 +2]);
-		tri_faces[i].n1=glm::vec3(nbo[i*9 +3], nbo[i*9 +4], nbo[i*9 +5]);
-		tri_faces[i].n2=glm::vec3(nbo[i*9 + 6],nbo[i*9 + 7],nbo[i*9 + 8]);
-
-
-		////// NOTE This line is hacky, just to save the normal
-
-		tri_faces[i].n0=glm::normalize(tri_faces[i].n0+tri_faces[i].n1+tri_faces[i].n2);
-
-
-		//tri_faces[i].p0 = glm::vec3(vbo[3*temp_faces[0][i][0]],vbo[3*temp_faces[0][i][0] + 1],vbo[3*(temp_faces[0][i][0]) + 2]);
-		//tri_faces[i].p1 = glm::vec3(vbo[3*temp_faces[0][i][1]],vbo[3*temp_faces[0][i][1] + 1],vbo[3*(temp_faces[0][i][1]) + 2]);
-		//tri_faces[i].p2 = glm::vec3(vbo[3*temp_faces[0][i][2]],vbo[3*temp_faces[0][i][2] + 1],vbo[3*(temp_faces[0][i][2]) + 2]);
-		cout<"ok";
-		//tri_faces[i].p0= vbo[i*tri_faces[i].p0.x, i*tri_faces[i].p0.y,i*tri_faces[i].p0.z];
-	}
 	
-	//vbo[temp_faces[0][0][0]
-	/*for( int i=0 ; i <number_of_faces ; i++)
-	{
-	cout<<tri_faces[i].p0.x<<"	\n";
-	cout<<tri_faces[i].p1.x<<"	\n";
-	cout<<tri_faces[i].p2.x<<"	\n";
-	}*/
+		//vbo[temp_faces[0][0][0]
+		/*for( int i=0 ; i <number_of_faces ; i++)
+		{
+		cout<<tri_faces[i].p0.x<<"	\n";
+		cout<<tri_faces[i].p1.x<<"	\n";
+		cout<<tri_faces[i].p2.x<<"	\n";
+		}*/
+	}
 
     
 	// execute the kernel
