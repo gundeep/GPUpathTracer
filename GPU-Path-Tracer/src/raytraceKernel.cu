@@ -26,7 +26,7 @@ float* device_nbo;
 triangle* primitives;
 
 
- struct isNegative
+struct isNegative
 	{
 		__host__ __device__ 
 		bool operator()(const ray & x) 
@@ -187,40 +187,6 @@ __global__ void sendImageToPBO(uchar4* PBOpos, glm::vec2 resolution, glm::vec3* 
 }
 
 
-__host__ __device__ Fresnel calculateFresnel(glm::vec3 normal, glm::vec3 incident, float incidentIOR, float transmittedIOR) {
-  	Fresnel fresnel;
-
-	incident = glm::normalize(incident);
-	normal = glm::normalize(normal);
-	float cosIncidence = abs(glm::dot(incident, normal));
-	float sinIncidence = sqrt(1-cosIncidence*cosIncidence);
-
-	if (transmittedIOR > 0.0 && incidentIOR > 0)
-	{
-		float sinRefract = (incidentIOR/transmittedIOR)*sinIncidence;
-		float commonNumerator = sqrt(1-sinRefract*sinRefract);
-		float RsNumerator = incidentIOR*cosIncidence-transmittedIOR*commonNumerator;
-		float RsDenominator = incidentIOR*cosIncidence+transmittedIOR*commonNumerator;
-		float Rs = 0;
-		if (RsDenominator != 0)
-			Rs = (RsNumerator/RsDenominator)*(RsNumerator/RsDenominator);
-
-		float RpNumerator = (incidentIOR * commonNumerator) - (transmittedIOR * cosIncidence);
-		float RpDenominator = (incidentIOR * commonNumerator) + (transmittedIOR * cosIncidence);
-		float Rp = 0;
-		if (RpDenominator != 0)
-			Rp = (RpNumerator/RpDenominator)*(RpNumerator/RpDenominator);
-		
-		fresnel.reflectionCoefficient = (Rs + Rp)/2.0;
-		fresnel.transmissionCoefficient = 1 - fresnel.reflectionCoefficient;
-	}
-	else
-	{
-		fresnel.reflectionCoefficient = 1;
-		fresnel.transmissionCoefficient = 0;
-	}
-	return fresnel;
-}
 
 //__global__ void dof(raypacket)
 
@@ -323,6 +289,7 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 		}
 		else
 		{
+			// when the ray hits light
 			if (materials[geoms[Object_number].materialid].emittance>0 )
 			{
 			//	//glm::vec3 old_color=colors[index]*(time-1);
@@ -331,100 +298,68 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 				raybundle[index].useful=false;
 				return;
 			}
-			else if (materials[geoms[Object_number].materialid].hasReflective>0 && materials[geoms[Object_number].materialid].hasRefractive==0 )
+
+			// when the ray hits a REFLECTIVE only material
+			else if (materials[geoms[Object_number].materialid].hasReflective>0 
+					&& materials[geoms[Object_number].materialid].hasRefractive==0)
 			{
-				normal=glm::normalize(normal);
-				raybundle[index].direction=glm::normalize(raybundle[index].direction);
-				glm::vec3 reflectedRay;
-				reflectedRay= raybundle[index].direction - (normal +normal)*(glm::dot(raybundle[index].direction,normal));
-				reflectedRay = glm::normalize(reflectedRay);
-				raybundle[index].origin=POI;
+				glm::vec3 reflectedRay= calculateReflectionDirection(normal,raybundle[index].direction); 
 				raybundle[index].direction=reflectedRay;
+				raybundle[index].origin=POI;
 				return;
 			}
 
-			 else if (materials[geoms[Object_number].materialid].hasReflective>0 && materials[geoms[Object_number].materialid].hasRefractive>0 )
+			// when the ray hits a refractive material
+			 else if (materials[geoms[Object_number].materialid].hasReflective>0 
+						&& materials[geoms[Object_number].materialid].hasRefractive>0 )
 			{
-				// calculating reflected ray
-
-				/*normal=glm::normalize(normal);
-				raybundle[index].direction=glm::normalize(raybundle[index].direction);
-				glm::vec3 reflectedRay;
-				reflectedRay= raybundle[index].direction- (normal +normal)*(glm::dot(raybundle[index].direction,normal));
-				reflectedRay = glm::normalize(reflectedRay);*/
-			//	raybundle[index].origin=POI;
-				//raybundle[index].direction=reflectedRay;
-		//	}
-			// else if(materials[geoms[Object_number].materialid].hasRefractive>0)
-			// {
-
-				// calculating refracted ray
-
-				if( materials[geoms[Object_number].materialid].hasRefractive>0)
-				{
-					 float n1=1.0f;
-					 float n2=(materials[geoms[Object_number].materialid].indexOfRefraction);
-					 glm::vec3 incident=raybundle[index].direction;
-
-					 float magnitugeAxB=glm::length(glm::cross(normal,incident));
-					 float magA=glm::length(normal);
-					 float magB=glm::length(raybundle[index].direction);
-					 float sin0i=glm::sin((magnitugeAxB)/(magA*magB));
-					// printf("%f",sin0i);
-					 float sin0r;
-					 if( n1/n2 <=1)  //just a sanity check 
-					 {
-						 sin0r= ((n1)/(n2)) *sin0i;
-					 }
-					 else
-					 return;
-
-					 //CALCULATING FRESNAL COMPONENTS
-
-					
-
-	//////////////////////////////////////////////////////////////////////////////////
-
-					 float cos0i= glm::dot(normal, -1.0f*raybundle[index].direction);
-					 //float cos0i= glm::sqrt(1-sin0i*sin0i);
-					//float cos0r= glm::sqrt(1-sin0r*sin0r);
-
-					 float cos0r=glm::sqrt(1-((n1/n2)*(n1/n2)*(1-cos0i*cos0i))); 
-					 glm::vec3 refracted;	
-					 if ( cos0i>0)
-					 {
-						refracted= ((n1)/(n2))*incident + (((n1)/(n2))*cos0i-cos0r)*normal;
-					 }
-					 else
-					 {
-						refracted= ((n1)/(n2))*incident - (((n1)/(n2))*cos0i-cos0r)*normal;
-					 }
+				float n1,n2;
+				n1=1.0f;
+				n2=materials[geoms[Object_number].materialid].indexOfRefraction;
 
 
-					 glm::vec3 reflected= raybundle[index].direction + 2*cos0i*normal;
 
-					 ray refractedray;
-					 refractedray.origin=POI;
-					 refractedray.direction= glm::normalize(refracted);
-				//	 if (index%3==0)
-					 {
-						raybundle[index].direction=refracted;
-					 }
-				//	 else
-				//	 {
-				//		 raybundle[index].direction=glm::normalize(reflectedRay);
-				//		 return;
-				//	 }
+				ray outRay;
+				outRay.direction= calculateTransmissionDirection(normal,raybundle[index].direction, n1,n2);
 				
+				Fresnel fresnel = calculateFresnel(normal, raybundle[index].direction,n1,n2);
 
+				//using russian roullete
+				thrust::default_random_engine rng(hash1(index*bounces*time));
+				thrust::uniform_real_distribution<float> u01(0,1);
+				float xi1=(float)u01(rng);
+				float xi2=(float)u01(rng);
+				float xi3=(float)u01(rng);
+				float russianRoulette = xi3;
 
-				 for(int i=0; i<numberOfGeoms; i++)
+				if ( russianRoulette < fresnel.transmissionCoefficient)
+				{
+					//do refraction
+					outRay.direction= glm::normalize(calculateTransmissionDirection(normal, raybundle[index].direction, n1,n2));
+					outRay.origin= POI;
+					raybundle[index].origin=outRay.origin;
+					raybundle[index].direction=outRay.direction;
+				}
+				else
+				{
+					// do refelction
+					outRay.direction = glm::normalize(calculateReflectionDirection(normal,raybundle[index].direction));
+					outRay.origin=POI;
+					raybundle[index].origin=outRay.origin;
+					raybundle[index].direction=outRay.direction;
+					// since the ray got reflected it will not go inside the object so no more intersection tests.
+					return;
+				}
+
+				// redo all the intersection tests
+
+				for(int i=0; i<=numberOfGeoms; i++)
 				{
 					glm::vec3 intersectionPoint;
 					glm::vec3 intersectionNormal;
 					if(geoms[i].type==SPHERE)
 					{
-						depth = sphereIntersectionTest(geoms[i], raybundle[index], intersectionPoint, intersectionNormal);
+						depth = sphereIntersectionTest(geoms[i], outRay, intersectionPoint, intersectionNormal);
 						if(depth>-EPSILON)
 						{
 							if (tmin<=EPSILON || depth<tmin+EPSILON)
@@ -438,7 +373,7 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 					}
 					else if(geoms[i].type==CUBE)
 					{
-						depth = boxIntersectionTest(geoms[i], raybundle[index], intersectionPoint, intersectionNormal);
+						depth = boxIntersectionTest(geoms[i], outRay, intersectionPoint, intersectionNormal);
 						if (depth>-EPSILON)
 						{
 							if (tmin<=EPSILON || depth<tmin+EPSILON)
@@ -450,18 +385,17 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 							}
 						}
 					}
-					
+
 					else if( geoms[i].type==MESH)
 					{
 						//printf("okay in mesh");
-						//hack
 						for ( int j=0; j<vbosize/9; ++j)
 						{
 							float t = -1;
 							glm::vec3 temp_intersectionPoint;
 							glm::vec3 temp_normal;
 					
-							depth = RayTriangleIntersect(geoms[i], raybundle[index], faces[j].p0,faces[j].p1,faces[j].p2,
+							depth = RayTriangleIntersect(geoms[i], outRay, faces[j].p0,faces[j].p1,faces[j].p2,
 								faces[j].n0,intersectionPoint, temp_normal);
 							if (depth>-EPSILON)
 							{
@@ -474,33 +408,27 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 								}
 							}
 						}
-				
 					}
 				}
+				
+				// now the ray is inside and you have to find out the direction when it goes out
 
-				 // when the light is going out of object
-				  n2=1;
-				  n1=(materials[geoms[Object_number].materialid].indexOfRefraction);
-				  incident=refracted;
+				n2=1.0f;
+				n1=materials[geoms[Object_number].materialid].indexOfRefraction;
+				outRay.direction=calculateTransmissionDirection(normal,outRay.direction,n1,n2);
+				outRay.origin=POI;
+				raybundle[index].origin=outRay.origin;
+				raybundle[index].direction=outRay.direction;
 
-				  magnitugeAxB=glm::length(glm::cross(normal,incident));
-				  magA=glm::length(normal);
-				  magB=glm::length(refracted);
-				  sin0i=glm::sin((magnitugeAxB)/(magA*magB));
-				// printf("%f",sin0i);
+				//fresnel = calculateFresnel(normal, raybundle[index].direction, n1, n2);
 
-				 sin0r= ((n1)/(n2)) *sin0i;
+				/*if( russianRoulette < fresnel.transmissionCoefficient)
+				{
+					outRay.direction=calculate
 
-				 cos0i= glm::sqrt(1-sin0i*sin0i);
-				 cos0r= glm::sqrt(1-sin0r*sin0r);
+				}*/
 
-				 refracted= ((n1)/(n2))*incident - (((n1)/(n2))*cos0i-cos0r)*normal;
-
-				 raybundle[index].direction=refracted;
-				 raybundle[index].direction =(raybundle[index].direction);
-				 raybundle[index].origin=POI;
-				} 
-			 }
+			}
 			else
 			{
 		 		glm::vec3 random1_num=generateRandomNumberFromThread(resolution,time*(bounces),x,y);
@@ -533,7 +461,7 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
 					float* vbo, float* nbo,float* cbo, int vbosize, int nbosize,int cbosize, obj* objs, int numberofmeshes,
 					int number_of_faces, triangle* tri_faces, int* ibo, int ibosize){
   
-  int traceDepth = 1; //determines how many bounces the raytracer traces
+  int traceDepth = 3; //determines how many bounces the raytracer traces
   int bounces=0;
   int activerays=(int)renderCam->resolution.x*(int)renderCam->resolution.y;
 
