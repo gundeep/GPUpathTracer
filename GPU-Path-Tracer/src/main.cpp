@@ -7,175 +7,155 @@
 
 #include "main.h"
 
+//////////////////////////////////
+//////////Interactive camera/////
+/////////////////////////////////
+
+void fixYaw() {
+	float twoPI=6.28;
+	renderCam->yaw = fmod(renderCam->yaw,twoPI); // Normalize the yaw.
+}
+
+void fixPitch() {
+	float padding = 0.05;
+	renderCam->pitch = clamp(renderCam->pitch, PI/2 + padding, PI/2 - padding); // Limit the pitch.
+}
+
+void fixRadius() {
+	float minRadius = 0.2;
+	float maxRadius = 100.0;
+	renderCam->radius = clamp(renderCam->radius, minRadius, maxRadius);
+}
+void fixApertureRadius() {
+	float minApertureRadius = 0.0;
+	float maxApertureRadius = 25.0;
+	renderCam->apertureRadius = clamp(renderCam->apertureRadius, minApertureRadius, maxApertureRadius);
+}
+
+void changeYaw(float m){
+	renderCam->yaw += m;
+	fixYaw();
+}
+
+void changePitch(float m){
+	renderCam->pitch += m;
+	fixPitch();
+}
+
+void changeRadius(float m){
+	renderCam->radius += renderCam->radius * m; // Change proportional to current radius. Assuming radius isn't allowed to go to zero.
+	fixRadius();
+}
+
+void changeAltitude(float m){
+	renderCam->centerPosition.y += m;
+	//fixCenterPosition();
+}
+
+void changeApertureDiameter(float m){
+	renderCam->apertureRadius += (renderCam->apertureRadius + 0.01) * m; // Change proportional to current apertureRadius.
+	fixApertureRadius();
+}
+
+float rx;
+float ry;
+float dist;
+const float ZOOM_STEP = 0.01f;
+
+void zoom(float dz) {
+	dist = clamp(dist - ZOOM_STEP*dz, 1.5f, 10.0f);
+}
+
+void rotate(float dx, float dy) {
+	if (abs(dx) > 0.0f) {
+        rx += dx;
+        rx = fmod(rx,360.0f);
+	}
+	if (abs(dy) > 0.0f) {
+        ry += dy;
+        ry = clamp(ry, - (4.0f/5.0f)*90.0f, (4.0f/5.0f)*90.0f);
+	}
+}
 
 
-//// ALL the Ambient Occlusion Stuff
-//GLuint depthTexture = 0;
-//GLuint normalTexture = 0;
-//GLuint positionTexture = 0;
-//GLuint FBO = 0;
-//GLuint random_normal_tex;
-//GLuint random_scalar_tex;
-//
-//GLuint ssao_prog;
-//  void initSSAO()
-//  {
-//	Utility::shaders_t shaders = Utility::loadShaders("shaders/ssao.vert", "shaders/ssao.frag");
-//    ssao_prog = glCreateProgram();
-//	glBindAttribLocation(ssao_prog, quad_attributes::POSITION, "Position");
-//	glBindAttribLocation(ssao_prog, quad_attributes::TEXCOORD, "Texcoord");
-// 
-//	Utility::attachAndLinkProgram(ssao_prog, shaders);
-//  }
-//
-//  device_mesh2_t device_quad;
-//void initQuad() {
-//	vertex2_t verts [] = { {glm::vec3(-1,1,0),glm::vec2(0,1)},
-//	{glm::vec3(-1,-1,0),glm::vec2(0,0)},
-//	{glm::vec3(1,-1,0), glm::vec2(1,0)},
-//	{glm::vec3(1,1,0),  glm::vec2(1,1)}};
-//
-//	unsigned short indices[] = { 0,1,2,0,2,3};
-//
-//	//Allocate vertex array
-//	//Vertex arrays encapsulate a set of generic vertex attributes and the buffers they are bound too
-//	//Different vertex array per mesh.
-//	glGenVertexArrays(1, &(device_quad.vertex_array));
-//    glBindVertexArray(device_quad.vertex_array);
-//
-//    
-//	//Allocate vbos for data
-//	glGenBuffers(1,&(device_quad.vbo_data));
-//	glGenBuffers(1,&(device_quad.vbo_indices));
-//    
-//	//Upload vertex data
-//	glBindBuffer(GL_ARRAY_BUFFER, device_quad.vbo_data);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
-//    //Use of strided data, Array of Structures instead of Structures of Arrays
-//	glVertexAttribPointer(quad_attributes::POSITION, 3, GL_FLOAT, GL_FALSE,sizeof(vertex2_t),0);
-//	glVertexAttribPointer(quad_attributes::TEXCOORD, 2, GL_FLOAT, GL_FALSE,sizeof(vertex2_t),(void*)sizeof(glm::vec3));
-//	glEnableVertexAttribArray(quad_attributes::POSITION);
-//	glEnableVertexAttribArray(quad_attributes::TEXCOORD);
-//
-//    //indices
-//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, device_quad.vbo_indices);
-//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*sizeof(GLushort), indices, GL_STATIC_DRAW);
-//    device_quad.num_indices = 6;
-//	//Unplug Vertex Array
-//    glBindVertexArray(0);
-//}
-//
-//  enum Display display_type = DISPLAY_TOTAL;
-//  enum Occlusion occlusion_type = OCCLUSION_NONE;
-//void draw_quad() {
-//
-//    glUseProgram(ssao_prog);
-//
-//	glBindVertexArray(device_quad.vertex_array);
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, device_quad.vbo_indices);
-//
-//    glEnable(GL_TEXTURE_2D);
-//
-//	glm::mat4 persp = glm::perspective(45.0f,1.0f,FARP,NEARP);
-//    glm::vec4 test(-2,0,10,1);
-//    glm::vec4 testp = persp * test;
-//    glm::vec4 testh = testp / testp.w;
-//    glm::vec2 coords = glm::vec2(testh.x, testh.y) / 2.0f + 0.5f;
-//    glUniform1i(glGetUniformLocation(ssao_prog, "u_ScreenHeight"), height);
-//    glUniform1i(glGetUniformLocation(ssao_prog, "u_ScreenWidth"), width);
-//    glUniform1f(glGetUniformLocation(ssao_prog, "u_Far"), FARP);
-//    glUniform1f(glGetUniformLocation(ssao_prog, "u_Near"), NEARP);
-//    glUniform1i(glGetUniformLocation(ssao_prog, "u_OcclusionType"), occlusion_type);
-//    glUniform1i(glGetUniformLocation(ssao_prog, "u_DisplayType"), display_type);
-//    glUniformMatrix4fv(glGetUniformLocation(ssao_prog, "u_Persp"),1, GL_FALSE, &persp[0][0] );
-//    
-//	glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, depthTexture);
-//    glUniform1i(glGetUniformLocation(ssao_prog, "u_Depthtex"),0);
-//    glActiveTexture(GL_TEXTURE1);
-//    glBindTexture(GL_TEXTURE_2D, normalTexture);
-//    glUniform1i(glGetUniformLocation(ssao_prog, "u_Normaltex"),1);
-//    glActiveTexture(GL_TEXTURE2);
-//    glBindTexture(GL_TEXTURE_2D, positionTexture);
-//    glUniform1i(glGetUniformLocation(ssao_prog, "u_Positiontex"),2);
-//    glActiveTexture(GL_TEXTURE3);
-//    glBindTexture(GL_TEXTURE_2D, random_normal_tex);
-//    glUniform1i(glGetUniformLocation(ssao_prog, "u_RandomNormaltex"),3);
-//    glActiveTexture(GL_TEXTURE4);
-//    glBindTexture(GL_TEXTURE_2D, random_scalar_tex);
-//    glUniform1i(glGetUniformLocation(ssao_prog, "u_RandomScalartex"),4);
-//    
-//    glDrawElements(GL_TRIANGLES, device_quad.num_indices, GL_UNSIGNED_SHORT,0);
-//
-//    glBindVertexArray(0);
-//}
-//int mouse_buttons = 0;
-//int mouse_old_x = 0;
-//int mouse_old_y = 0;
-//void mouse(int button, int state, int x, int y)
-//{
-//    if (state == GLUT_DOWN) {
-//        mouse_buttons |= 1<<button;
-//    } else if (state == GLUT_UP) {
-//        mouse_buttons = 0;
-//    }
-// 
-//    mouse_old_x = x;
-//    mouse_old_y = y;
-//}
-//Camera cam(glm::vec3(17,0,4),
-//		   glm::normalize(glm::vec3(-1,0,0)),
-//		   glm::normalize(glm::vec3(0,0,1)));
-//
-//void motion(int x, int y)
-//{
-//    float dx, dy;
-//    dx = (float)(x - mouse_old_x);
-//    dy = (float)(y - mouse_old_y);
-// 
-//    if (mouse_buttons & 1<<GLUT_RIGHT_BUTTON) {
-//		cam.adjust(0,0,dx,0,0,0);;
-//    }
-//    else {
-//        cam.adjust(-dx*0.2f,-dy*0.2f,0,0,0,0);
-//    }
-// 
-//    mouse_old_x = x;
-//    mouse_old_y = y;
-//}
-//void
-//Camera::adjust(float dx, // look left right
-//      float dy, //look up down
-//      float dz,
-//      float tx, //strafe left right
-//      float ty,
-//      float tz)//go forward) //strafe up down
-//{
-//
-//	if (abs(dx) > 0) {
-//		rx += dx;
-//        rx = fmod(rx,360.0f);
-//	}
-//
-//	if (abs(dy) > 0) {
-//        ry += dy;
-//        ry = clamp(ry,-70.0f, 70.0f);
-//	}
-//
-//	if (abs(tx) > 0) {
-//	//	glm::vec3 dir = glm::rotate_vector::rotate(start_dir,rx + 90,up);
-//      //  glm::vec2 dir2(dir.x,dir.y);
-//       // glm::vec2 mag = dir2 * tx;
-//      //  pos += mag;	
-//	}
-//
-//	if (abs(tz) > 0) {
-//		//glm::vec3 dir = glm::gtx::rotate_vector::rotate(start_dir,rx,up);
-//       // glm::vec2 dir2(dir.x,dir.y);
-//       // glm::vec2 mag = dir2 * tz;
-//       // pos += mag;
-//	}
-//}
+void initView() {
+    dist = 4.0f;
+	rx = -140.0f;
+	ry = 0.0f;
+}
+
+int mouse_buttons = 0;
+int mouse_old_x = 0;
+int mouse_old_y = 0;
+int theModifierState=0;
+
+ 
+void motion(int x, int y)
+{	
+	
+    float dx, dy;
+    dx = (float)(x - mouse_old_x);
+    dy = (float)(y - mouse_old_y);
+ 
+    if (mouse_buttons == GLUT_LEFT_BUTTON)  // Rotate
+		{
+			cout<<"mouse left button";
+			changeYaw(dx * 0.01);
+			changePitch(-dy * 0.01);
+		}
+		else if (mouse_buttons == GLUT_MIDDLE_BUTTON) // Zoom
+		{
+			changeAltitude(-dy * 0.01);
+		}    
+
+		if (mouse_buttons == GLUT_RIGHT_BUTTON) // camera move
+		{
+			changeRadius(-dy * 0.01);
+
+		}
+    mouse_old_x = x;
+    mouse_old_y = y;
+	glutPostRedisplay();
+}
+
+void mouse(int button, int state, int x, int y)
+{
+    mouse_buttons = button;
+	theModifierState = glutGetModifiers();
+	mouse_old_x = x;
+	mouse_old_y = y;
+	motion(x, y);
+
+	/*if (state == GLUT_DOWN) {
+        mouse_buttons |= 1<<button;
+    } 
+	else if (state == GLUT_UP) {
+        mouse_buttons = 0;
+    }
+ 
+    mouse_old_x = x;
+    mouse_old_y = y;*/
+}
+
+const float ROTATION_STEP_STEP = 0.1f;
+float rotation_step = 0.0f;
+void adjustRotation(float adjustment) {
+    rotation_step += adjustment;
+}
+
+void speedUpRotation() {
+    adjustRotation(ROTATION_STEP_STEP);
+}
+
+void slowDownRotation() {
+    adjustRotation(-ROTATION_STEP_STEP);
+}
+
+void reshape(int w, int h)
+{
+	glViewport(0,0,(GLsizei)w,(GLsizei)h);
+}
+
 
 
 //-------------------------------
@@ -264,10 +244,20 @@ int main(int argc, char** argv){
 
 	  glfwTerminate();
   #else
+		glewInit();
+		GLenum err=glewInit();
+		if(GLEW_OK !=err)
+		{
+			cout<<"glew failed"<<endl;
+			exit(1);
+		}
+
+
 	  glutDisplayFunc(display);
+	  glutReshapeFunc(reshape);	
 	  glutKeyboardFunc(keyboard);
-	 // glutMouseFunc(mouse);
-	  //glutMotionFunc(motion);
+	  glutMouseFunc(mouse);
+	  glutMotionFunc(motion);
 
 	  glutMainLoop();
   #endif
@@ -431,7 +421,8 @@ void runCuda(){
       for(int i=0; i<renderCam->resolution.x*renderCam->resolution.y; i++){
         renderCam->image[i] = glm::vec3(0,0,0);
       }
-      cudaDeviceReset(); 
+      cudaDeviceReset();
+	  //deleteImage(image);
       finishedRender = false;
     }
   }
@@ -488,29 +479,9 @@ void runCuda(){
 		   case(27):
 			   exit(1);
 			   break;
-			/*
-			case('1'):
-			  occlusion_type = OCCLUSION_NONE;
-			  break;
-			case('2'):
-			  occlusion_type = OCCLUSION_REGULAR_SAMPLES;
-			  break;
-			case('6'):
-			  display_type = DISPLAY_DEPTH;
-			  break;
-			case('7'):
-			  display_type = DISPLAY_NORMAL;
-			  break;
-			case('8'):
-			  display_type = DISPLAY_POSITION;
-			  break;
-			case('9'):
-			  display_type = DISPLAY_OCCLUSION;
-			  break;
-			case('0'):
-			  display_type = DISPLAY_TOTAL;
-			  break;
-			}*/
+		   case(' '):
+				   cout<<"hello";
+				   break;
 	}
 }
 	

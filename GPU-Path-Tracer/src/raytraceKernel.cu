@@ -287,8 +287,82 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 		}
 		else  // ray hits something
 		{
+			// ITS A GOOD TIME TO THINK ABOUT SUBSURFCAE SCATERRING
+
+			 if (materials[geoms[Object_number].materialid].hasScatter>0 || glm::length(materials[geoms[Object_number].materialid].absorptionCoefficient) >0)
+			{
+
+				AbsorptionAndScatteringProperties something;
+				something.absorptionCoefficient= materials[geoms[Object_number].materialid].absorptionCoefficient;
+				something.reducedScatteringCoefficient= materials[geoms[Object_number].materialid].reducedScatterCoefficient;
+
+				//random numbers
+				thrust::default_random_engine rng(hash1(index*bounces*time));
+				thrust::uniform_real_distribution<float> u01(0,1);
+				float randomFloatForScatteringDistance=(float)u01(rng);
+				float randomFloat2=(float)u01(rng);
+				float randomFloat3=(float)u01(rng);
+				
+				float scatteringDistance= -log(randomFloatForScatteringDistance)/something.reducedScatteringCoefficient;
+
+				float find_t= (glm::length(POI - raybundle[index].origin));
+				if(scatteringDistance< find_t)
+				{
+
+					ray nextRay;
+					raybundle[index].origin=POI;
+					nextRay.origin= raybundle[index].origin + raybundle[index].direction*scatteringDistance;
+					nextRay.direction = getRandomDirectionInSphere (randomFloat2,  randomFloat3);
+					//nextRay.origin=POI;
+					raybundle[index].direction= nextRay.direction;
+					raybundle[index].origin= nextRay.origin;
+					//return;
+					if (bounces==1)
+					{
+
+						//printf("color before absorption %f   %f    %f \n" , temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
+
+						temp[raybundle[index].index_ray]=materials[geoms[Object_number].materialid].color * calculateTransmission(something.absorptionCoefficient, scatteringDistance);
+
+					//	printf("color after absorption %f   %f    %f \n" , temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
+						//return;
+					
+					}
+					else //if (bounces==2 && bounces <9)
+					{
+						//printf("dont be here %d   %d \n ", index, bounces);
+						//printf("color before absorption %f   %f    %f \n" , temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
+						
+						temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color*calculateTransmission(something.absorptionCoefficient, scatteringDistance); 
+
+					//	printf("color after absorption %f   %f    %f \n", temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
+						//return;
+					}
+					// compute the absorbed light
+					/*if (bounces==1)
+					{
+						temp[raybundle[index].index_ray]=materials[geoms[Object_number].materialid].color*calculateTransmission(something.absorptionCoefficient,scatteringDistance);
+					}
+					else if (bounces==2 && bounces <9)
+					{
+						 temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*calculateTransmission(something.absorptionCoefficient,scatteringDistance); 
+					}*/
+					
+					//return;
+				}
+				else
+					// only absorption
+
+				temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*calculateTransmission(something.absorptionCoefficient,find_t);
+				//return;
+
+			}
+
+
+
+
 			// when the ray hits light
-			if (materials[geoms[Object_number].materialid].emittance>0 )
+			else if (materials[geoms[Object_number].materialid].emittance>0 )
 			{
 			//	//glm::vec3 old_color=colors[index]*(time-1);
 				colors[raybundle[index].index_ray]=(old_color+( temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color*materials[geoms[Object_number].materialid].emittance))/time; //old_color+
@@ -308,7 +382,7 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 			}
 
 			// when the ray hits a refractive material
-			 else if (materials[geoms[Object_number].materialid].hasReflective>0 
+			  if (materials[geoms[Object_number].materialid].hasReflective>0 
 						&& materials[geoms[Object_number].materialid].hasRefractive>0 )
 			{
 				float n1,n2;
@@ -442,79 +516,9 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 
 				}*/
 
-			}
-
-			// ITS A GOOD TIME TO THINK ABOUT SUBSURFCAE SCATERRING
-
-			else if (materials[geoms[Object_number].materialid].hasScatter>0 || glm::length(materials[geoms[Object_number].materialid].absorptionCoefficient) >0)
-			{
-
-				AbsorptionAndScatteringProperties something;
-				something.absorptionCoefficient= materials[geoms[Object_number].materialid].absorptionCoefficient;
-				something.reducedScatteringCoefficient= materials[geoms[Object_number].materialid].reducedScatterCoefficient;
-
-				//random numbers
-				thrust::default_random_engine rng(hash1(index*bounces*time));
-				thrust::uniform_real_distribution<float> u01(0,1);
-				float randomFloatForScatteringDistance=(float)u01(rng);
-				float randomFloat2=(float)u01(rng);
-				float randomFloat3=(float)u01(rng);
-				
-				float scatteringDistance= -log(randomFloatForScatteringDistance)/something.reducedScatteringCoefficient;
-
-				float find_t= (glm::length(POI - raybundle[index].origin));
-				if(scatteringDistance< find_t)
-				{
-
-					ray nextRay;
-					raybundle[index].origin=POI;
-					nextRay.origin= raybundle[index].origin + raybundle[index].direction*scatteringDistance;
-					nextRay.direction = getRandomDirectionInSphere (randomFloat2,  randomFloat3);
-					//nextRay.origin=POI;
-					raybundle[index].direction= nextRay.direction;
-					raybundle[index].origin= nextRay.origin;
-					//return;
-					if (bounces==1)
-					{
-
-						//printf("color before absorption %f   %f    %f \n" , temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
-
-						temp[raybundle[index].index_ray]=materials[geoms[Object_number].materialid].color * calculateTransmission(something.absorptionCoefficient, scatteringDistance);
-
-					//	printf("color after absorption %f   %f    %f \n" , temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
-						return;
-					
-					}
-					else //if (bounces==2 && bounces <9)
-					{
-						//printf("dont be here %d   %d \n ", index, bounces);
-						//printf("color before absorption %f   %f    %f \n" , temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
-						
-						temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color*calculateTransmission(something.absorptionCoefficient, scatteringDistance); 
-
-					//	printf("color after absorption %f   %f    %f \n", temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
-						return;
-					}
-					// compute the absorbed light
-					/*if (bounces==1)
-					{
-						temp[raybundle[index].index_ray]=materials[geoms[Object_number].materialid].color*calculateTransmission(something.absorptionCoefficient,scatteringDistance);
-					}
-					else if (bounces==2 && bounces <9)
-					{
-						 temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*calculateTransmission(something.absorptionCoefficient,scatteringDistance); 
-					}*/
-					
-					//return;
 				}
-				else
-					// only absorption
 
-				temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*calculateTransmission(something.absorptionCoefficient,find_t);
-				return;
-
-			}
-
+			
 
 
 			else

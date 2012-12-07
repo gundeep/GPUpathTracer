@@ -75,6 +75,15 @@ struct camera {
 	glm::vec3* image;
 	ray* rayList;
 	std::string imageName;
+	glm::vec3 centerPosition;
+	float yaw;
+	float pitch;
+	float radius;
+	float apertureRadius;
+	void fixYaw();
+	void fixPitch();
+	void fixRadius();
+	void fixApertureRadius();
 };
 
 struct material{
