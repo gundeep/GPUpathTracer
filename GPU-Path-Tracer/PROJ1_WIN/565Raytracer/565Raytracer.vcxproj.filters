@@ -45,5 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\scenes\sampleScene.txt" />
+    <None Include="shaders\passthroughFS.glsl" />
+    <None Include="shaders\passthroughVS.glsl" />
   </ItemGroup>
 </Project>

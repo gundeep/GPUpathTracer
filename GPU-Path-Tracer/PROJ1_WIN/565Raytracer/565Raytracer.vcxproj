@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\scenes\sampleScene.txt" />
+    <None Include="shaders\passthroughFS.glsl" />
+    <None Include="shaders\passthroughVS.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FF21CA49-522E-4E86-B508-EE515B248FC4}</ProjectGuid>

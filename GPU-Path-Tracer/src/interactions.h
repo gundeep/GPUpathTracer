@@ -31,13 +31,20 @@ __host__ __device__ glm::vec3 calculateRandomDirectionInHemisphere(glm::vec3 nor
 
 //TODO (OPTIONAL): IMPLEMENT THIS FUNCTION
 __host__ __device__ glm::vec3 calculateTransmission(glm::vec3 absorptionCoefficient, float distance) {
-  return glm::vec3(0,0,0);
+	glm::vec3 transmitted;
+	transmitted.x = pow((float)E, (float)(-1 * absorptionCoefficient.x * distance));
+	transmitted.y = pow((float)E, (float)(-1 * absorptionCoefficient.y * distance));
+	transmitted.z = pow((float)E, (float)(-1 * absorptionCoefficient.z * distance));
+	return transmitted;
 }
 
 //TODO (OPTIONAL): IMPLEMENT THIS FUNCTION
 __host__ __device__  bool calculateScatterAndAbsorption(ray& r, float& depth, AbsorptionAndScatteringProperties& currentAbsorptionAndScattering, 
                                                         glm::vec3& unabsorbedColor, material m, float randomFloatForScatteringDistance, float randomFloat2, float randomFloat3){
-  return false;
+  
+	
+															
+	return false;
 }
 
 //TODO (OPTIONAL): IMPLEMENT THIS FUNCTION
