@@ -1,21 +1,72 @@
-﻿Build started 12/7/2012 4:10:53 PM.
+﻿Build started 12/8/2012 2:46:43 AM.
      1>Project "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\565Raytracer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Creating "Debug\565Raytracer.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Debug\565Raytracer.unsuccessfulbuild".
        AddCudaCompileDeps:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" /I../shared/glew/includes /I../shared/freeglut/includes /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /I. /FIcuda_runtime.h /c C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu 
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" /I../shared/glew/includes /I../shared/freeglut/includes /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /I. /FIcuda_runtime.h /c C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\cukd-master\algorithms\reduction.cu 
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
        AddCudaCompilePropsDeps:
        Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
        CudaBuild:
-         Compiling CUDA source file ..\..\src\raytraceKernel.cu...
-         cmd.exe /C "C:\Users\gundeep\AppData\Local\Temp\bb3866d641844da1b2ec6ffd36cb5e86.cmd"
-         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"  -G0  --keep-dir "Debug" -maxrregcount=0  --machine 32 --compile  -D_NEXUS_DEBUG -g    -Xcompiler "/EHsc /nologo /Od /Zi  /MDd " -o "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Debug/raytraceKernel.cu.obj" "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu"
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+         Compiling CUDA source file ..\cukd-master\algorithms\reduction.cu...
+         cmd.exe /C "C:\Users\gundeep\AppData\Local\Temp\5240afee0cc1437a949d8683ae60773e.cmd"
+         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"  -G0  --keep-dir "Debug" -maxrregcount=0  --machine 32 --compile  -D_NEXUS_DEBUG -g    -Xcompiler "/EHsc /nologo /Od /Zi  /MDd " -o "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Debug/reduction.cu.obj" "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\cukd-master\algorithms\reduction.cu"
          
-         C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"  -G0  --keep-dir "Debug" -maxrregcount=0  --machine 32 --compile  -D_NEXUS_DEBUG -g    -Xcompiler "/EHsc /nologo /Od /Zi  /MDd " -o "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Debug/raytraceKernel.cu.obj" "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu" 
-         raytraceKernel.cu
-     1>C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\Build\CUDA 4.0.targets(357,9): warning MSB5021: The task executable is being terminated due to cancellation of the build.
+         C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"  -G0  --keep-dir "Debug" -maxrregcount=0  --machine 32 --compile  -D_NEXUS_DEBUG -g    -Xcompiler "/EHsc /nologo /Od /Zi  /MDd " -o "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Debug/reduction.cu.obj" "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\cukd-master\algorithms\reduction.cu" 
+         reduction.cu
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/PROJ1_WIN/cukd-master/algorithms/reduction.cu(10): fatal error C1083: Cannot open include file: 'algorithms/shared_mem.h': No such file or directory
+     1>C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\Build\CUDA 4.0.targets(357,9): error MSB3721: The command ""C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"  -G0  --keep-dir "Debug" -maxrregcount=0  --machine 32 --compile  -D_NEXUS_DEBUG -g    -Xcompiler "/EHsc /nologo /Od /Zi  /MDd " -o "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Debug/reduction.cu.obj" "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\cukd-master\algorithms\reduction.cu"" exited with code 2.
      1>Done Building Project "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\565Raytracer.vcxproj" (build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:04.94
+Time Elapsed 00:00:00.80

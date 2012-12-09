@@ -43,6 +43,60 @@ void checkCUDAError(const char *msg) {
   }
 } 
 
+// Its cook torrance time
+//__host__ __device__ void cooktorrance()
+//{
+//	//refered to pixar's link
+//	float gaussconstant=100;
+//	float roughness=0.2;
+//	glm::vec3 specularcolor= glm::vec3(1);
+//
+//
+//	// things we need
+//	//normalized normal and vector to eye
+//
+//	glm::vec3 Nn=glm::normalize(N);
+//	glm::vec3 Vn= glm::normalize(-I);
+//
+//	float F, ktransmit;
+//	float m = roughness;
+//
+//	calculateFresnel( glm::normalize(I), Nn , 1/IOR, F, Ktransmit);
+//
+//
+//	glm::vec3 cook=glm::vec3(0);
+//	float n_dot_v= glm::dot(Nn, Vn);
+//
+//	glm::vec3 Ln= glm::normalize(L);
+//	glm::vec3 H= glm::normalize(Vn+Ln);
+//
+//
+//	float n_dot_h= glm::dot(Nn, H);
+//	float n_dot_l= glm::dot(Nn, Ln);
+//	float v_dot_h= glm::dot(Vn, H);
+//
+//
+//	float D;
+//	float alpha=glm::acos(n_dot_h);
+//
+//	//micrtofacet distribution
+//
+//	D= gaussconstant* exp(-(alpha*alpha)/(m*m));
+//
+//	// geomteric attenuation factor
+//	float G= min(1, min((2*n_dot_h*n_dot_v/v_dot_h), (2*n_dot_h*n_dot_l/v_dot_h))); 
+//
+//	// sum cntributions
+//	cook+= C1*(F*D*G)/(PI*n_dot_v);
+//
+//	cook=cook/PI;
+//
+//	Oi = opacity;
+//	Ci = Kd*diffuseColor*diffuse(Nn) + Ks*specularColor*cook) Oi;
+//
+//}
+
+
 //LOOK: This function demonstrates how to use thrust for random number generation on the GPU!
 //Function that generates static.
 __host__ __device__ glm::vec3 generateRandomNumberFromThread(glm::vec2 resolution, float time, int x, int y){
@@ -65,7 +119,7 @@ __host__ __device__ glm::vec3 generateRandomNumberFromThread2(glm::vec2 resoluti
 //Kernel that does the initial raycast from the camera and caches the result. "First bounce cache, second bounce thrash!"
 
 //host and device mean compile one version on the CPU and one version on CPU
-__global__ void raycastFromCameraKernel(glm::vec2 resolution, float time, glm::vec3 eye, glm::vec3 view, glm::vec3 up, glm::vec2 fov, ray* ray_bundle, glm::vec3* temp){
+__global__ void raycastFromCameraKernel(glm::vec2 resolution, float time, glm::vec3 eye, glm::vec3 view, glm::vec3 up, glm::vec2 fov, ray* ray_bundle, glm::vec3* temp, glm::vec3 *transmittedcolor){
    
   float x = (blockIdx.x * blockDim.x) + threadIdx.x;
   float y = (blockIdx.y * blockDim.y) + threadIdx.y;
@@ -130,6 +184,7 @@ __global__ void raycastFromCameraKernel(glm::vec2 resolution, float time, glm::v
   ray_bundle[index].useful = true;
 
   // Reset temp
+  transmittedcolor[index] = glm::vec3(1.0f,1.0f,1.0f);
    temp[index]= glm::vec3(1.0f,1.0f,1.0f);
   //printf("\nraypacket index %f",ray_bundle->index_ray );  // also to check if we did all the 640000 rays
 }
@@ -195,7 +250,8 @@ __global__ void sendImageToPBO(uchar4* PBOpos, glm::vec2 resolution, glm::vec3* 
 __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, int rayDepth, glm::vec3* colors, 
                             staticGeom* geoms, int numberOfGeoms, material* materials, int numberOfMaterials,
 							glm::vec3* renderimage, ray* raybundle, int bounces, glm::vec3* temp, obj* cudameshes,
-							int numberofmeshes, float *device_vbo, float vbosize, triangle* faces, float* device_nbo, int nbosize)
+							int numberofmeshes, float *device_vbo, float vbosize, triangle* faces, float* device_nbo,
+							int nbosize, glm::vec3 *tranmitted_color)
 {
 
   int x = (blockIdx.x * blockDim.x) + threadIdx.x;
@@ -317,23 +373,24 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 					raybundle[index].direction= nextRay.direction;
 					raybundle[index].origin= nextRay.origin;
 					//return;
-					if (bounces==1)
+					//if (bounces==1)
 					{
 
+						tranmitted_color[raybundle[index].index_ray]*= calculateTransmission(something.absorptionCoefficient, scatteringDistance);
 						//printf("color before absorption %f   %f    %f \n" , temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
 
-						temp[raybundle[index].index_ray]=materials[geoms[Object_number].materialid].color * calculateTransmission(something.absorptionCoefficient, scatteringDistance);
+						//temp[raybundle[index].index_ray]= calculateTransmission(something.absorptionCoefficient, scatteringDistance);
 
 					//	printf("color after absorption %f   %f    %f \n" , temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
 						//return;
-					
+						return;
 					}
-					else //if (bounces==2 && bounces <9)
+					//else //if (bounces==2 && bounces <9)
 					{
 						//printf("dont be here %d   %d \n ", index, bounces);
 						//printf("color before absorption %f   %f    %f \n" , temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
 						
-						temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color*calculateTransmission(something.absorptionCoefficient, scatteringDistance); 
+						//temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*calculateTransmission(something.absorptionCoefficient, scatteringDistance); 
 
 					//	printf("color after absorption %f   %f    %f \n", temp[raybundle[index].index_ray].x,temp[raybundle[index].index_ray].y,temp[raybundle[index].index_ray].z);
 						//return;
@@ -353,34 +410,14 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 				else
 					// only absorption
 
-				temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*calculateTransmission(something.absorptionCoefficient,find_t);
+				tranmitted_color[raybundle[index].index_ray]*= calculateTransmission(something.absorptionCoefficient,find_t);
 				//return;
 
 			}
 
-
-
-
-			// when the ray hits light
-			else if (materials[geoms[Object_number].materialid].emittance>0 )
-			{
-			//	//glm::vec3 old_color=colors[index]*(time-1);
-				colors[raybundle[index].index_ray]=(old_color+( temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color*materials[geoms[Object_number].materialid].emittance))/time; //old_color+
-				//glm::clamp(colors[raybundle[index].index_ray],0.0f,1.0f);
-				raybundle[index].useful=false;
-				return;
-			}
-
+			 			 	
 			// when the ray hits a REFLECTIVE only material
-			else if (materials[geoms[Object_number].materialid].hasReflective>0 
-					&& materials[geoms[Object_number].materialid].hasRefractive==0)
-			{
-				glm::vec3 reflectedRay= calculateReflectionDirection(normal,raybundle[index].direction); 
-				raybundle[index].direction=reflectedRay;
-				raybundle[index].origin=POI;
-				return;
-			}
-
+			
 			// when the ray hits a refractive material
 			  if (materials[geoms[Object_number].materialid].hasReflective>0 
 						&& materials[geoms[Object_number].materialid].hasRefractive>0 )
@@ -521,7 +558,7 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 			
 
 
-			else
+			else // diffuse surface
 			{
 		 		glm::vec3 random1_num=generateRandomNumberFromThread(resolution,time*(bounces),x,y);
 				random_direction=calculateRandomDirectionInHemisphere(normal,random1_num.x,random1_num.y);
@@ -529,15 +566,28 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 				raybundle[index].direction=(random_direction);
 				raybundle[index].origin=POI;
 			 
+				//tranmitted_color[*= 
 				if (bounces==1)
 				{
-					 temp[raybundle[index].index_ray]=materials[geoms[Object_number].materialid].color;
+			//		 temp[raybundle[index].index_ray]=materials[geoms[Object_number].materialid].color;
 					
 				}
 				else //if (bounces==2 && bounces <9)
 				{
-					 temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color; 
+				//	 temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color; 
 				}
+
+				// when the ray hits light
+			 if (materials[geoms[Object_number].materialid].emittance>0 )
+			{
+			//	//glm::vec3 old_color=colors[index]*(time-1);
+				colors[raybundle[index].index_ray]=(old_color+(tranmitted_color[raybundle[index].index_ray]* temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color*materials[geoms[Object_number].materialid].emittance))/time; //old_color+
+				//tranmitted_color[raybundle[index].index_ray]*=
+				//glm::clamp(colors[raybundle[index].index_ray],0.0f,1.0f);
+				raybundle[index].useful=false;
+				return;
+			}
+
 			}
 		}
 	}
@@ -576,6 +626,10 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
   glm::vec3* temp_color=NULL;
   cudaMalloc((void**)&temp_color,(int)renderCam->resolution.x*(int)renderCam->resolution.y*sizeof(glm::vec3));
   
+  glm::vec3* transmittedcolor=NULL;
+  cudaMalloc((void**)&transmittedcolor,(int)renderCam->resolution.x*(int)renderCam->resolution.y*sizeof(glm::vec3));
+
+
   //package geometry and materials and sent to GPU
   staticGeom* geomList = new staticGeom[numberOfGeoms];
   for(int i=0; i<numberOfGeoms; i++){
@@ -643,7 +697,7 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
 
   //kernel call for camera rays
   
-	raycastFromCameraKernel<<<fullBlocksPerGrid, threadsPerBlock>>>( renderCam->resolution, (float)iterations, cam.position, cam.view, cam.up, cam.fov, raypacket, temp_color);
+	raycastFromCameraKernel<<<fullBlocksPerGrid, threadsPerBlock>>>( renderCam->resolution, (float)iterations, cam.position, cam.view, cam.up, cam.fov, raypacket, temp_color, transmittedcolor);
 
 	//kernel launches
 	while(bounces<10)
@@ -653,7 +707,7 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
 	   
 		raytraceRay<<<fullBlockPerGridSC, threadsPerBlock>>>(renderCam->resolution, (float)iterations, cam, traceDepth, 
 			cudaimage, cudageoms, numberOfGeoms, cudamaterials,numberOfMaterials,renderimage,
-			raypacket,bounces,temp_color, cudaobjs, numberofmeshes,device_vbo,vbosize,primitives, device_nbo, nbosize);
+			raypacket,bounces,temp_color, cudaobjs, numberofmeshes,device_vbo,vbosize,primitives, device_nbo, nbosize, transmittedcolor);
 		thrust::device_ptr<ray> devicePointer(raypacket);
 		thrust::device_ptr<ray> newEnd=thrust::remove_if(devicePointer,devicePointer+activerays, isNegative());
 		activerays= newEnd.get() - devicePointer.get();
@@ -675,6 +729,7 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
   cudaFree(cudamaterials);
   cudaFree(renderimage);
   cudaFree(temp_color);
+  cudaFree(transmittedcolor);
   cudaFree(cudaobjs);
   cudaFree( device_vbo );
   cudaFree( device_cbo );
