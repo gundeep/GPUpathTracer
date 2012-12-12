@@ -23,7 +23,7 @@ RSCTCOEFF   0
 EMITTANCE   0
 
 MATERIAL 2 				//purple/blue diffuse
-RGB         .03 .46 .86      
+RGB         .6 .6 .86      
 SPECEX      0      
 SPECRGB     1 1 1      
 REFL        0       
@@ -36,7 +36,7 @@ EMITTANCE   0
 
 MATERIAL 3 				//green glossy
 RGB         .63 .9 .04      
-SPECEX      0      
+SPECEX      2      
 SPECRGB     1 1 1       
 REFL        0       
 REFR        0        
@@ -67,7 +67,7 @@ REFR        1
 REFRIOR     1.35      
 SCATTER     1        
 ABSCOEFF    0.02 5.1 5.7     
-RSCTCOEFF   9.0
+RSCTCOEFF   2.0
 EMITTANCE   0
 
 MATERIAL 6 				//green glossy
@@ -92,7 +92,7 @@ REFRIOR     0
 SCATTER     0        
 ABSCOEFF    0 0 0      
 RSCTCOEFF   0
-EMITTANCE   1.0
+EMITTANCE   1.5
 
 MATERIAL 8				//light
 RGB         1 1 1       
@@ -104,7 +104,7 @@ REFRIOR     0
 SCATTER     0        
 ABSCOEFF    0 0 0      
 RSCTCOEFF   0
-EMITTANCE   5
+EMITTANCE   1
 
 MATERIAL 9				//purple diffuse
 RGB         0.05 0.81 0.62       
@@ -119,9 +119,9 @@ RSCTCOEFF   0
 EMITTANCE   0
 
 CAMERA
-RES         1280 720
-FOVY        25
-ITERATIONS  10000
+RES         600 600
+FOVY        20
+ITERATIONS  5000
 FILE        renders/sampleScene.bmp
 frame 0
 EYE         0 2 9
@@ -134,7 +134,7 @@ UP          0 1 0
 
 OBJECT 0
 cube
-material 2
+material 0
 frame 0
 TRANS       0 0 0
 ROTAT       0 0 90
@@ -146,7 +146,7 @@ SCALE       .01 15 10
 
 OBJECT 1
 cube
-material 7
+material 0
 frame 0
 TRANS       0 5 -5
 ROTAT       0 90 0
@@ -158,7 +158,7 @@ SCALE       .01 10 10
 
 OBJECT 2
 cube
-material 0
+material 7
 frame 0
 TRANS       0 10 0
 ROTAT       0 0 90
@@ -170,7 +170,7 @@ SCALE       .01 10 10
 
 OBJECT 3
 cube
-material 1
+material 2
 frame 0
 TRANS       -10 5 0
 ROTAT       0 0 0
@@ -193,11 +193,11 @@ ROTAT       0 0 0
 SCALE       .01 10 10
 
 OBJECT 5
-c:\users\gundeep\desktop\pyramid.obj
-material 5
+sphere
+material 2
 frame 0
-TRANS       0.8 0.5 1
-ROTAT       0 0 0
+TRANS       0.8 1.5 1
+ROTAT       0 20 0
 SCALE       2 2 2
 frame 1
 TRANS       0 10 0
@@ -205,15 +205,26 @@ ROTAT       0 0 90
 SCALE       .3 4 4
 
 OBJECT 6
-cube
-material 8
+sphere
+material 2
 frame 0
-TRANS       0.8 1.5 -2
+TRANS       -1.8 1.5 4
 ROTAT       0 0 0
-SCALE       1 1 1
+SCALE       2 2 2
 frame 1
 TRANS       0 10 0
 ROTAT       0 0 90
 SCALE       .3 4 4
 
+OBJECT 7
+sphere
+material 3
+frame 0
+TRANS       3.8 1.5 -2
+ROTAT       0 0 0
+SCALE       2 2 2
+frame 1
+TRANS       0 10 0
+ROTAT       0 0 90
+SCALE       .3 4 4
 

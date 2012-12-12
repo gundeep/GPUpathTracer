@@ -115,6 +115,10 @@ void motion(int x, int y)
 		}
     mouse_old_x = x;
     mouse_old_y = y;
+	//cudaDeviceReset();
+	//pathtracerReset();
+//	deletePBO(&pbo);
+	//runCuda();
 	glutPostRedisplay();
 }
 
@@ -371,7 +375,10 @@ void runCuda(){
 		}*/
 	}
 
-    
+	//cout<<renderCam->fov.x<<"fov"<<endl;
+	
+	
+	   
 	// execute the kernel
     cudaRaytraceCore(dptr, renderCam, targetFrame, iterations, materials,
 		renderScene->materials.size(), geoms, renderScene->objects.size(),
@@ -379,6 +386,7 @@ void runCuda(){
 		ibo,ibosize);
     
     // unmap buffer object
+	
     cudaGLUnmapBufferObject(pbo);
   }else{
 

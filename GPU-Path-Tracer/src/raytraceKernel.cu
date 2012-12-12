@@ -43,59 +43,87 @@ void checkCUDAError(const char *msg) {
   }
 } 
 
-// Its cook torrance time
-//__host__ __device__ void cooktorrance()
-//{
-//	//refered to pixar's link
-//	float gaussconstant=100;
-//	float roughness=0.2;
-//	glm::vec3 specularcolor= glm::vec3(1);
-//
-//
-//	// things we need
-//	//normalized normal and vector to eye
-//
-//	glm::vec3 Nn=glm::normalize(N);
-//	glm::vec3 Vn= glm::normalize(-I);
-//
-//	float F, ktransmit;
-//	float m = roughness;
-//
-//	calculateFresnel( glm::normalize(I), Nn , 1/IOR, F, Ktransmit);
-//
-//
-//	glm::vec3 cook=glm::vec3(0);
-//	float n_dot_v= glm::dot(Nn, Vn);
-//
-//	glm::vec3 Ln= glm::normalize(L);
-//	glm::vec3 H= glm::normalize(Vn+Ln);
-//
-//
-//	float n_dot_h= glm::dot(Nn, H);
-//	float n_dot_l= glm::dot(Nn, Ln);
-//	float v_dot_h= glm::dot(Vn, H);
-//
-//
-//	float D;
-//	float alpha=glm::acos(n_dot_h);
-//
-//	//micrtofacet distribution
-//
-//	D= gaussconstant* exp(-(alpha*alpha)/(m*m));
-//
-//	// geomteric attenuation factor
-//	float G= min(1, min((2*n_dot_h*n_dot_v/v_dot_h), (2*n_dot_h*n_dot_l/v_dot_h))); 
-//
-//	// sum cntributions
-//	cook+= C1*(F*D*G)/(PI*n_dot_v);
-//
-//	cook=cook/PI;
-//
-//	Oi = opacity;
-//	Ci = Kd*diffuseColor*diffuse(Nn) + Ks*specularColor*cook) Oi;
-//
-//}
+//Its cook torrance time
+__host__ __device__ void cooktorrance(ray inray, ray& outray, glm::vec3 intersect, glm::vec3 N,
+	glm::vec3 emittedcolor, glm::vec3& color, material mat, float xi1, float xi2)
+{
+	//refered to pixar's link
+	// See norm badler's notes for more information on microfacets and cook torrance.
+	float gaussconstant=100;
+	float roughness=0.2;
+	glm::vec3 specularcolor= glm::vec3(1);
 
+	float n1,n2;
+
+	// things we need
+	//normalized normal and vector to eye
+
+	glm::vec3 Nn=glm::normalize(N);
+	glm::vec3 Vn= glm::normalize(-1.0f*inray.direction);
+
+	float F, ktransmit;
+	float m = roughness;
+
+	//if(inside)
+	{
+//		n1=mat.indexOfRefraction;
+//		n2=1.0f;
+	}
+//	else
+	{
+		n1=1.0f;
+		n2= mat.indexOfRefraction;
+	}
+
+	Fresnel fresnel=calculateFresnel( Nn, glm::normalize(inray.direction) , n1, n2);
+	outray.direction= calculateRandomDirectionInHemisphere(N, xi1,xi2);
+	outray.origin= intersect;
+	glm::vec3 L =outray.direction;
+
+	
+
+	//glm::vec3 cook=glm::vec3(0);
+	float n_dot_v= glm::dot(Nn, Vn);
+
+	glm::vec3 Ln= glm::normalize(L);
+
+	//half angle
+	glm::vec3 H= glm::normalize(Vn+Ln);
+
+
+	float n_dot_h= glm::dot(Nn, H);
+	float n_dot_l= glm::dot(Nn, Ln);
+	float v_dot_h= glm::dot(Vn, H);
+
+
+	float D;
+	float alpha=glm::acos(n_dot_h);
+
+	//micrtofacet distribution
+
+	D= gaussconstant* exp(-(alpha*alpha)/(m*m));
+
+	// geomteric attenuation factor
+	float G= glm::min(1.0f,glm::min((2.0f*(n_dot_h*n_dot_v)/(v_dot_h)), (2.0f*(n_dot_h*n_dot_l)/(v_dot_h)))); 
+	
+	// sum cntributions
+	glm::vec3 cook;
+	cook= mat.specularColor.x* glm::vec3((fresnel.reflectionCoefficient *D*G)/(PI*n_dot_v));
+
+
+	//color[index].
+	//cook=cook/PI;
+
+	//Oi = opacity;
+	//Ci = Kd*diffuseColor*diffuse(Nn) + Ks*specularColor*cook) Oi;
+
+}
+
+
+void pathtracerReset()
+{
+	//~cudaimage();
+}
 
 //LOOK: This function demonstrates how to use thrust for random number generation on the GPU!
 //Function that generates static.
@@ -119,17 +147,17 @@ __host__ __device__ glm::vec3 generateRandomNumberFromThread2(glm::vec2 resoluti
 //Kernel that does the initial raycast from the camera and caches the result. "First bounce cache, second bounce thrash!"
 
 //host and device mean compile one version on the CPU and one version on CPU
-__global__ void raycastFromCameraKernel(glm::vec2 resolution, float time, glm::vec3 eye, glm::vec3 view, glm::vec3 up, glm::vec2 fov, ray* ray_bundle, glm::vec3* temp, glm::vec3 *transmittedcolor){
+__global__ void raycastFromCameraKernel(glm::vec2 resolution, float time, glm::vec3 eye, glm::vec3 view, glm::vec3 up, glm::vec2 fov, ray* ray_bundle, glm::vec3* temp, glm::vec3 *transmittedcolor, int iterations){
    
   float x = (blockIdx.x * blockDim.x) + threadIdx.x;
   float y = (blockIdx.y * blockDim.y) + threadIdx.y;
 	
   int index = x + (y * resolution.x);
 
-  glm::vec3 rand=generateRandomNumberFromThread2(resolution,time,x,y);
+ glm::vec3 rand=generateRandomNumberFromThread2(resolution,time,x,y);
    
-  x=x+rand.x;
-  y=y+rand.y;
+  x=(float)x+((float)rand.x);
+  y=(float)y+((float)rand.y);
 
  
   //standard camera raycast stuff
@@ -159,24 +187,54 @@ __global__ void raycastFromCameraKernel(glm::vec2 resolution, float time, glm::v
   bool dof=true;
   //if (dof)
   
-  glm::vec3 focuspoint= glm::vec3(0,0,2);
-  glm::vec3 unitvec1= glm::normalize(focuspoint-eye);
-  glm::vec3 unitvec2= glm::normalize(direction);
-  float z_dist= focuspoint.z- eye.z;
 
-  // using similar triangles
+  ///////////////////////////////////
+  /////////Depth Of Field ///////////
+  ///////////////////////////////////
+
+  // decide upon a focal plane distance
+  float focalPlaneDist = 9.0f;
+  glm::vec3 focusPoint;
+  glm::vec3 rayDirection = direction;
+
+
+  // to find the focus point start from eye in ray direction*focalplanedist
+  focusPoint.x = eye.x + rayDirection.x * focalPlaneDist;
+  focusPoint.y = eye.y + rayDirection.y * focalPlaneDist;
+  focusPoint.z = eye.z + rayDirection.z * focalPlaneDist;
+
+  // focallength
+  float focalLength = 8.0f;
+  // f-Number = focalLength/diameter
+  float lensRadius = (focalLength/8.0)/2.0f;
+  thrust::default_random_engine rng(hash1(index*iterations*123));
+  thrust::uniform_real_distribution<float> u03(-lensRadius, lensRadius);
+  glm::vec3 rayPointOnCamera = glm::vec3(eye.x + (float)u03(rng), eye.y + (float)u03(rng), eye.z);
+		
+		ray r;
+		r.origin = rayPointOnCamera;
+		r.direction = glm::normalize(focusPoint - rayPointOnCamera);
+
+
+
+  //glm::vec3 focuspoint= glm::vec3(-1.8,1.5,4);
+  //glm::vec3 unitvec1= glm::normalize(focuspoint-eye);
+  //glm::vec3 unitvec2= glm::normalize(direction);
+  //float z_dist= focuspoint.z- eye.z;
+
+  //// using similar triangles
 	
-  float y_dist = ((z_dist)/(unitvec2.z))*unitvec2.y;
-  float x_dist=  unitvec2.x *((z_dist)/(unitvec2.z));
-  
-  glm::vec3 rand1=generateRandomNumberFromThread2(resolution,time*11,x,y);
-  glm::vec3 new_eye= glm::vec3(eye.x+(rand1.x),eye.y+(rand1.y),eye.z);
+  //float y_dist = ((z_dist)/(unitvec2.z))*unitvec2.y;
+  //float x_dist=  unitvec2.x *((z_dist)/(unitvec2.z));
+  //
+  //glm::vec3 rand1=generateRandomNumberFromThread2(resolution,time*11,x,y);
+  //glm::vec3 new_eye= glm::vec3(eye.x+(rand1.x)*1.3f,eye.y+(rand1.y)*1.3f,eye.z);
 
-  glm::vec3 new_direction=glm::normalize(eye+glm::vec3(x_dist,y_dist,z_dist) - new_eye);  
-  ray r;
-  r.origin = new_eye;
-  r.direction = new_direction;
-  
+  //glm::vec3 new_direction=glm::normalize(eye+glm::vec3(x_dist,y_dist,z_dist) - new_eye);  
+  //ray r;
+  //r.origin = new_eye;
+  //r.direction = new_direction;
+  //
 
   ray_bundle[index].direction=direction;
   ray_bundle[index].origin=eye;
@@ -247,7 +305,7 @@ __global__ void sendImageToPBO(uchar4* PBOpos, glm::vec2 resolution, glm::vec3* 
 
 //TODO: IMPLEMENT THIS FUNCTION
 //Core raytracer kernel
-__global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, int rayDepth, glm::vec3* colors, 
+__global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, int iterations, glm::vec3* colors, 
                             staticGeom* geoms, int numberOfGeoms, material* materials, int numberOfMaterials,
 							glm::vec3* renderimage, ray* raybundle, int bounces, glm::vec3* temp, obj* cudameshes,
 							int numberofmeshes, float *device_vbo, float vbosize, triangle* faces, float* device_nbo,
@@ -353,7 +411,7 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 				something.reducedScatteringCoefficient= materials[geoms[Object_number].materialid].reducedScatterCoefficient;
 
 				//random numbers
-				thrust::default_random_engine rng(hash1(index*bounces*time));
+				thrust::default_random_engine rng(hash1(index*iterations));
 				thrust::uniform_real_distribution<float> u01(0,1);
 				float randomFloatForScatteringDistance=(float)u01(rng);
 				float randomFloat2=(float)u01(rng);
@@ -417,7 +475,14 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 
 			 			 	
 			// when the ray hits a REFLECTIVE only material
-			
+			else if (materials[geoms[Object_number].materialid].hasReflective>0 
+					&& materials[geoms[Object_number].materialid].hasRefractive==0)
+			{
+				glm::vec3 reflectedRay= calculateReflectionDirection(normal,raybundle[index].direction); 
+				raybundle[index].direction=reflectedRay;
+				raybundle[index].origin=POI;
+				return;
+			}
 			// when the ray hits a refractive material
 			  if (materials[geoms[Object_number].materialid].hasReflective>0 
 						&& materials[geoms[Object_number].materialid].hasRefractive>0 )
@@ -562,19 +627,32 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 			{
 		 		glm::vec3 random1_num=generateRandomNumberFromThread(resolution,time*(bounces),x,y);
 				random_direction=calculateRandomDirectionInHemisphere(normal,random1_num.x,random1_num.y);
-				//random_direction=random_direction*glm::vec3(10,10,10);
-				raybundle[index].direction=(random_direction);
-				raybundle[index].origin=POI;
-			 
+				random_direction=random_direction;//*glm::vec3(10,10,10);
+				//raybundle[index].direction=(random_direction);
+				//raybundle[index].origin=POI;
+				ray outray;
+
+				
+					cooktorrance( raybundle[index], outray, POI,normal, temp[raybundle[index].index_ray],
+					colors[raybundle[index].index_ray],materials[geoms[Object_number].materialid],
+					random1_num.x,random1_num.y);
+					
+					raybundle[index].direction=outray.direction;
+					raybundle[index].origin=outray.origin;
+					
+
 				//tranmitted_color[*= 
 				if (bounces==1)
 				{
-			//		 temp[raybundle[index].index_ray]=materials[geoms[Object_number].materialid].color;
-					
+					 temp[raybundle[index].index_ray]=materials[geoms[Object_number].materialid].color;
+
+					 
 				}
 				else //if (bounces==2 && bounces <9)
 				{
-				//	 temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color; 
+					 temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color; 
+
+
 				}
 
 				// when the ray hits light
@@ -697,7 +775,7 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
 
   //kernel call for camera rays
   
-	raycastFromCameraKernel<<<fullBlocksPerGrid, threadsPerBlock>>>( renderCam->resolution, (float)iterations, cam.position, cam.view, cam.up, cam.fov, raypacket, temp_color, transmittedcolor);
+	raycastFromCameraKernel<<<fullBlocksPerGrid, threadsPerBlock>>>( renderCam->resolution, (float)iterations, cam.position, cam.view, cam.up, cam.fov, raypacket, temp_color, transmittedcolor,iterations);
 
 	//kernel launches
 	while(bounces<10)
@@ -705,7 +783,7 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
 		bounces++;
 		dim3 fullBlockPerGridSC((int)ceil(float(renderCam->resolution.x)/float(tileSize)), ((int)activerays)/(float(tileSize)*(int)ceil(float(renderCam->resolution.x))));
 	   
-		raytraceRay<<<fullBlockPerGridSC, threadsPerBlock>>>(renderCam->resolution, (float)iterations, cam, traceDepth, 
+		raytraceRay<<<fullBlockPerGridSC, threadsPerBlock>>>(renderCam->resolution, (float)iterations, cam, iterations, 
 			cudaimage, cudageoms, numberOfGeoms, cudamaterials,numberOfMaterials,renderimage,
 			raypacket,bounces,temp_color, cudaobjs, numberofmeshes,device_vbo,vbosize,primitives, device_nbo, nbosize, transmittedcolor);
 		thrust::device_ptr<ray> devicePointer(raypacket);

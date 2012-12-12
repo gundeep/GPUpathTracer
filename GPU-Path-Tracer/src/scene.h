@@ -22,10 +22,13 @@ private:
     ifstream fp_in;
     int loadMaterial(string materialid);
     int loadObject(string objectid);
-    int loadCamera();
+    
 	int loadMesh(string filename);
 
 public:
+
+	bool cameramoved;
+	int loadCamera();
 	obj *mesh;
     scene(string filename);
     ~scene();
