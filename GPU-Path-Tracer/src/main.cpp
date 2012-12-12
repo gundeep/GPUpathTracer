@@ -12,13 +12,13 @@
 /////////////////////////////////
 
 void fixYaw() {
-	float twoPI=6.28;
-	renderCam->yaw = fmod(renderCam->yaw,twoPI); // Normalize the yaw.
+	float twoPI=6.2831853071795864769252867665590057683943;
+	renderCam->yaw = glm::mod(renderCam->yaw,twoPI); // Normalize the yaw.
 }
 
 void fixPitch() {
 	float padding = 0.05;
-	renderCam->pitch = clamp(renderCam->pitch, PI/2 + padding, PI/2 - padding); // Limit the pitch.
+	renderCam->pitch = clamp(renderCam->pitch, -PI/2 + padding, PI/2 - padding); // Limit the pitch.
 }
 
 void fixRadius() {
@@ -78,11 +78,7 @@ void rotate(float dx, float dy) {
 }
 
 
-void initView() {
-    dist = 4.0f;
-	rx = -140.0f;
-	ry = 0.0f;
-}
+
 
 int mouse_buttons = 0;
 int mouse_old_x = 0;
@@ -94,32 +90,40 @@ void motion(int x, int y)
 {	
 	
     float dx, dy;
-    dx = (float)(x - mouse_old_x);
-    dy = (float)(y - mouse_old_y);
- 
-    if (mouse_buttons == GLUT_LEFT_BUTTON)  // Rotate
-		{
-			cout<<"mouse left button";
-			changeYaw(dx * 0.01);
-			changePitch(-dy * 0.01);
-		}
-		else if (mouse_buttons == GLUT_MIDDLE_BUTTON) // Zoom
-		{
-			changeAltitude(-dy * 0.01);
-		}    
+    dx = (float)( mouse_old_x-x);
+    dy = (float)( mouse_old_y-y);
 
-		if (mouse_buttons == GLUT_RIGHT_BUTTON) // camera move
-		{
-			changeRadius(-dy * 0.01);
+	 if( dx !=0 || dy!=0)
+	 {
+		if (mouse_buttons == GLUT_LEFT_BUTTON)  // Rotate
+			{
+				cout<<"mouse left button";
+				changeYaw(dx * 0.01);
+				changePitch(-dy * 0.01);
+			}
+			else if (mouse_buttons == GLUT_MIDDLE_BUTTON) // Zoom
+			{
+				changeAltitude(-dy * 0.01);
+			}    
 
+			if (mouse_buttons == GLUT_RIGHT_BUTTON) // camera move
+			{
+				changeRadius(-dy * 0.01);
+
+			}
+		mouse_old_x = x;
+		mouse_old_y = y;
+		//cudaDeviceReset();
+		//pathtracerReset();
+	//	deletePBO(&pbo);
+		//runCuda(); 
+		
+		for(int i=0; i<renderCam->resolution.x*renderCam->resolution.y; i++){
+		renderCam->image[i] = glm::vec3(0,0,0);
 		}
-    mouse_old_x = x;
-    mouse_old_y = y;
-	//cudaDeviceReset();
-	//pathtracerReset();
-//	deletePBO(&pbo);
-	//runCuda();
-	glutPostRedisplay();
+		iterations=0;
+		glutPostRedisplay();
+	 }
 }
 
 void mouse(int button, int state, int x, int y)
@@ -130,30 +134,8 @@ void mouse(int button, int state, int x, int y)
 	mouse_old_y = y;
 	motion(x, y);
 
-	/*if (state == GLUT_DOWN) {
-        mouse_buttons |= 1<<button;
-    } 
-	else if (state == GLUT_UP) {
-        mouse_buttons = 0;
-    }
- 
-    mouse_old_x = x;
-    mouse_old_y = y;*/
 }
 
-const float ROTATION_STEP_STEP = 0.1f;
-float rotation_step = 0.0f;
-void adjustRotation(float adjustment) {
-    rotation_step += adjustment;
-}
-
-void speedUpRotation() {
-    adjustRotation(ROTATION_STEP_STEP);
-}
-
-void slowDownRotation() {
-    adjustRotation(-ROTATION_STEP_STEP);
-}
 
 void reshape(int w, int h)
 {
@@ -377,7 +359,15 @@ void runCuda(){
 
 	//cout<<renderCam->fov.x<<"fov"<<endl;
 	
+	// you dont have to do this everytime. think about it
 	
+	float xDirection = sin(renderCam->yaw) * cos(renderCam->pitch);
+	float yDirection = sin(renderCam->pitch);
+	float zDirection = cos(renderCam->yaw) * cos(renderCam->pitch);
+	glm::vec3 directionToCamera = glm::vec3(xDirection, yDirection, zDirection);
+	glm::vec3 viewDirection = -directionToCamera;
+	glm::vec3 eyePosition = renderCam->centerPosition + directionToCamera * renderCam->radius;
+	renderCam->positions[0]= glm::vec3(eyePosition.x,eyePosition.y,eyePosition.z);
 	   
 	// execute the kernel
     cudaRaytraceCore(dptr, renderCam, targetFrame, iterations, materials,

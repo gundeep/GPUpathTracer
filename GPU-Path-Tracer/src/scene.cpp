@@ -220,22 +220,11 @@ int scene::loadCamera(){
 	newCamera.frames = frameCount;
 	
 	//move frames into CUDA readable arrays
-	float xDirection = sin(renderCam.yaw) * cos(renderCam.pitch)+0.1;
-	float yDirection = sin(renderCam.pitch) +0.1;
-	float zDirection = cos(renderCam.yaw) * cos(renderCam.pitch);
-
-	
-
 	newCamera.positions = new glm::vec3[frameCount];
 	newCamera.views = new glm::vec3[frameCount];
 	newCamera.ups = new glm::vec3[frameCount];
 	for(int i=0; i<frameCount; i++){
-
-	glm::vec3 directiontocamera= glm::vec3(xDirection,yDirection,zDirection);
-	glm::vec3 viewDirection = -directiontocamera;
-	glm::vec3 eyePosition = positions[i] + directiontocamera * 4.0f; //hack hard coded 
-
-		newCamera.positions[i] = eyePosition ;
+		newCamera.positions[i] = positions[i];
 		newCamera.views[i] = views[i];
 		newCamera.ups[i] = ups[i];
 	}
@@ -249,6 +238,13 @@ int scene::loadCamera(){
 	renderCam = newCamera;
 	
 	//set up render camera stuff
+	renderCam.yaw=0.3f;
+	renderCam.pitch=0.0f;
+	renderCam.radius=10.0f;
+	
+	
+	renderCam.centerPosition= glm::vec3(-2,2,0);
+
 	renderCam.image = new glm::vec3[(int)renderCam.resolution.x*(int)renderCam.resolution.y];
 	renderCam.rayList = new ray[(int)renderCam.resolution.x*(int)renderCam.resolution.y];
 	for(int i=0; i<renderCam.resolution.x*renderCam.resolution.y; i++){
@@ -257,7 +253,8 @@ int scene::loadCamera(){
 	
 	cout << "Loaded " << frameCount << " frames for camera!" << endl;
 	return 1;
-	}
+}
+
 
 	//else  // the the cameramoved is true
 	//{

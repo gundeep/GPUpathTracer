@@ -120,7 +120,7 @@ EMITTANCE   0
 
 CAMERA
 RES         600 600
-FOVY        20
+FOVY        30
 ITERATIONS  5000
 FILE        renders/sampleScene.bmp
 frame 0

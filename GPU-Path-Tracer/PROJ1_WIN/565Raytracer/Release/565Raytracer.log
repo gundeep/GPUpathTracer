@@ -1,51 +1,26 @@
-﻿Build started 12/12/2012 1:41:23 AM.
+﻿Build started 12/12/2012 6:20:23 AM.
      1>Project "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\565Raytracer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Release\565Raytracer.unsuccessfulbuild" because "AlwaysCreate" was specified.
        AddCudaCompileDeps:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" /I../shared/glew/includes /I../shared/freeglut/includes /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /I. /FIcuda_runtime.h /c C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu 
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
        AddCudaCompilePropsDeps:
        Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
        CudaBuild:
-         Compiling CUDA source file ..\..\src\raytraceKernel.cu...
-         cmd.exe /C "C:\Users\gundeep\AppData\Local\Temp\95990727152a4d48930be3a0fc9b447e.cmd"
-         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"    --keep-dir "Release" -maxrregcount=0  --machine 32 --compile      -Xcompiler "/EHsc /nologo /Od /Zi  /MD " -o "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Release/raytraceKernel.cu.obj" "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu"
-         
-         C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"    --keep-dir "Release" -maxrregcount=0  --machine 32 --compile      -Xcompiler "/EHsc /nologo /Od /Zi  /MD " -o "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Release/raytraceKernel.cu.obj" "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu" 
-         raytraceKernel.cu
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(64): warning : variable "F" was declared but never referenced
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(64): warning : variable "ktransmit" was declared but never referenced
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(187): warning : variable "dof" was declared but never referenced
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(376): warning : variable "t" was declared but never referenced
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(575): warning : variable "t" was declared but never referenced
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(684): warning : variable "traceDepth" was declared but never referenced
-         
-         tmpxft_00001344_00000000-0_raytraceKernel.cudafe1.gpu
-         tmpxft_00001344_00000000-5_raytraceKernel.cudafe2.gpu
-         raytraceKernel.cu
-     1>c:\users\gundeep\downloads\final_project_gpu\gpupathtracer\gpu-path-tracer\src\glm\core\_swizzle.hpp(194): warning : missing return statement at end of non-void function "glm::detail::_swizzle_base2<ValueType, VecType, N, E0, E1, E2, E3, 1>::operator=(const glm::detail::_swizzle_base2<ValueType, VecType, N, E0, E1, E2, E3, 1>::Stub &)"
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(64): warning : variable "F" was declared but never referenced
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(64): warning : variable "ktransmit" was declared but never referenced
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(187): warning : variable "dof" was declared but never referenced
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(376): warning : variable "t" was declared but never referenced
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(575): warning : variable "t" was declared but never referenced
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(684): warning : variable "traceDepth" was declared but never referenced
-         
-         tmpxft_00001344_00000000-0_raytraceKernel.cudafe1.cpp
-         tmpxft_00001344_00000000-11_raytraceKernel.ii
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
        ClCompile:
-         All outputs are up-to-date.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /I"C:\ProgramData\NVIDIA Corporation\NVIDIA GPU Computing SDK 4.0\C\common\inc" /I../shared/glew/include /I../shared/freeglut/include /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\scene.cpp
+         scene.cpp
+     1>..\..\src\scene.cpp(179): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>..\..\src\scene.cpp(233): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>..\..\src\scene.cpp(235): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>..\..\src\scene.cpp(315): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>..\..\src\scene.cpp(320): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>..\..\src\scene.cpp(322): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>..\..\src\scene.cpp(324): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>..\..\src\scene.cpp(326): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>..\..\src\scene.cpp(331): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>..\..\src\scene.cpp(333): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
          All outputs are up-to-date.
        Link:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\Release\565Raytracer.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:../shared/glew/lib /LIBPATH:../shared/freeglut/lib /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\lib\Win32" cudart.lib glew32.lib glu32.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\565Raytracer.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\Release\565Raytracer.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\Release\565Raytracer.lib" /MACHINE:X86 "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Release/raytraceKernel.cu.obj"
@@ -70,4 +45,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:20.12
+Time Elapsed 00:00:02.59
