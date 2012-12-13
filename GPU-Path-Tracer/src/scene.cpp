@@ -243,7 +243,7 @@ int scene::loadCamera(){
 	renderCam.radius=10.0f;
 	
 	
-	renderCam.centerPosition= glm::vec3(-2,2,0);
+	renderCam.centerPosition= glm::vec3(-2,4,0);
 
 	renderCam.image = new glm::vec3[(int)renderCam.resolution.x*(int)renderCam.resolution.y];
 	renderCam.rayList = new ray[(int)renderCam.resolution.x*(int)renderCam.resolution.y];

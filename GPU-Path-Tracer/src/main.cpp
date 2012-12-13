@@ -95,7 +95,7 @@ void motion(int x, int y)
 
 	 if( dx !=0 || dy!=0)
 	 {
-		if (mouse_buttons == GLUT_LEFT_BUTTON)  // Rotate
+		if (mouse_buttons == GLUT_RIGHT_BUTTON)  // Rotate
 			{
 				cout<<"mouse left button";
 				changeYaw(dx * 0.01);
@@ -106,7 +106,7 @@ void motion(int x, int y)
 				changeAltitude(-dy * 0.01);
 			}    
 
-			if (mouse_buttons == GLUT_RIGHT_BUTTON) // camera move
+			if (mouse_buttons ==  GLUT_LEFT_BUTTON) // camera move
 			{
 				changeRadius(-dy * 0.01);
 

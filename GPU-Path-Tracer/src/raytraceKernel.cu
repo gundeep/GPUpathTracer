@@ -44,8 +44,8 @@ void checkCUDAError(const char *msg) {
 } 
 
 //Its cook torrance time
-__host__ __device__ void cooktorrance(ray inray, ray& outray, glm::vec3 intersect, glm::vec3 N,
-	glm::vec3 emittedcolor, glm::vec3& color, material mat, float xi1, float xi2)
+__host__ __device__ float cooktorrance(int bounces,int iterations,ray inray, ray& outray, glm::vec3 intersect, glm::vec3 N,
+	glm::vec3& emittedcolor, glm::vec3& temp_color, material mat, float xi1, float xi2)
 {
 	//refered to pixar's link
 	// See norm badler's notes for more information on microfacets and cook torrance.
@@ -90,6 +90,7 @@ __host__ __device__ void cooktorrance(ray inray, ray& outray, glm::vec3 intersec
 	//half angle
 	glm::vec3 H= glm::normalize(Vn+Ln);
 
+	//float cook= pow(glm::dot(Nn,H),mat.specularExponent);
 
 	float n_dot_h= glm::dot(Nn, H);
 	float n_dot_l= glm::dot(Nn, Ln);
@@ -107,10 +108,14 @@ __host__ __device__ void cooktorrance(ray inray, ray& outray, glm::vec3 intersec
 	float G= glm::min(1.0f,glm::min((2.0f*(n_dot_h*n_dot_v)/(v_dot_h)), (2.0f*(n_dot_h*n_dot_l)/(v_dot_h)))); 
 	
 	// sum cntributions
-	glm::vec3 cook;
-	cook= mat.specularColor.x* glm::vec3((fresnel.reflectionCoefficient *D*G)/(PI*n_dot_v));
+	
+	float cook= ((fresnel.reflectionCoefficient *D*G)/(PI*n_dot_v))*mat.specularColor.x;
+	
+	return (cook);
+	
+	//temp_color=(temp_color) + pow(glm::length(cook),mat.specularExponent);
 
-
+	//printf( "   %f \n", cook);
 	//color[index].
 	//cook=cook/PI;
 
@@ -211,11 +216,9 @@ __global__ void raycastFromCameraKernel(glm::vec2 resolution, float time, glm::v
   thrust::uniform_real_distribution<float> u03(-lensRadius, lensRadius);
   glm::vec3 rayPointOnCamera = glm::vec3(eye.x + (float)u03(rng), eye.y + (float)u03(rng), eye.z);
 		
-		ray r;
-		r.origin = rayPointOnCamera;
-		r.direction = glm::normalize(focusPoint - rayPointOnCamera);
-
-
+	ray r;
+	r.origin = rayPointOnCamera;
+	r.direction = glm::normalize(focusPoint - rayPointOnCamera);
 
   //glm::vec3 focuspoint= glm::vec3(-1.8,1.5,4);
   //glm::vec3 unitvec1= glm::normalize(focuspoint-eye);
@@ -628,32 +631,36 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 		 		glm::vec3 random1_num=generateRandomNumberFromThread(resolution,time*(bounces),x,y);
 				random_direction=calculateRandomDirectionInHemisphere(normal,random1_num.x,random1_num.y);
 				random_direction=random_direction;//*glm::vec3(10,10,10);
-				//raybundle[index].direction=(random_direction);
-				//raybundle[index].origin=POI;
+			//  raybundle[index].direction=(random_direction);
+			//	raybundle[index].origin=POI;
 				ray outray;
+				if (materials[geoms[Object_number].materialid].specularExponent>0)
+				{
+					//glm::vec3 view_dir= glm::normalize(cam.position-POI);
+					//glm::vec3 reflectedlight= calculateReflectionDirection(normal, -raybundle[index].direction);
 
-				
-					cooktorrance( raybundle[index], outray, POI,normal, temp[raybundle[index].index_ray],
+					float specterm= cooktorrance( bounces,iterations,raybundle[index], outray, POI,normal, temp[raybundle[index].index_ray],
 					colors[raybundle[index].index_ray],materials[geoms[Object_number].materialid],
 					random1_num.x,random1_num.y);
-					
+					temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color
+						+0.1f*specterm*(materials[geoms[Object_number].materialid].specularColor);
 					raybundle[index].direction=outray.direction;
 					raybundle[index].origin=outray.origin;
-					
-
-				//tranmitted_color[*= 
-				if (bounces==1)
-				{
-					 temp[raybundle[index].index_ray]=materials[geoms[Object_number].materialid].color;
-
-					 
 				}
-				else //if (bounces==2 && bounces <9)
-				{
-					 temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color; 
+				else
+					temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color;
 
+				raybundle[index].direction=random_direction;
+				raybundle[index].origin=POI;
 
-				}
+				
+
+			//	cooktorrance( bounces,iterations,raybundle[index], outray, POI,normal, temp[raybundle[index].index_ray],
+			//		colors[raybundle[index].index_ray],materials[geoms[Object_number].materialid],
+			//		random1_num.x,random1_num.y);
+				//	
+				//	raybundle[index].direction=outray.direction;
+				//	raybundle[index].origin=outray.origin;
 
 				// when the ray hits light
 			 if (materials[geoms[Object_number].materialid].emittance>0 )

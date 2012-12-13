@@ -1,4 +1,4 @@
-﻿Build started 12/11/2012 12:40:39 AM.
+﻿Build started 12/13/2012 4:02:56 PM.
      1>Project "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\565Raytracer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\565Raytracer.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -8,24 +8,22 @@
        Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
        CudaBuild:
          Compiling CUDA source file ..\..\src\raytraceKernel.cu...
-         cmd.exe /C "C:\Users\gundeep\AppData\Local\Temp\70325c33eee542e7a351933b2f21a885.cmd"
+         cmd.exe /C "C:\Users\gundeep\AppData\Local\Temp\3c85f23ddd9b494d90c7dd6842a6f50d.cmd"
          "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"  -G0  --keep-dir "Debug" -maxrregcount=0  --machine 32 --compile  -D_NEXUS_DEBUG -g    -Xcompiler "/EHsc /nologo /Od /Zi  /MDd " -o "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Debug/raytraceKernel.cu.obj" "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu"
          
          C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"  -G0  --keep-dir "Debug" -maxrregcount=0  --machine 32 --compile  -D_NEXUS_DEBUG -g    -Xcompiler "/EHsc /nologo /Od /Zi  /MDd " -o "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Debug/raytraceKernel.cu.obj" "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu" 
          raytraceKernel.cu
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(63): warning : variable "F" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(64): warning : variable "F" was declared but never referenced
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(63): warning : variable "ktransmit" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(64): warning : variable "ktransmit" was declared but never referenced
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(108): warning : variable "cook" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(192): warning : variable "dof" was declared but never referenced
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(184): warning : variable "dof" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(379): warning : variable "t" was declared but never referenced
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(373): warning : variable "t" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(578): warning : variable "t" was declared but never referenced
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(572): warning : variable "t" was declared but never referenced
-         
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(681): warning : variable "traceDepth" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(691): warning : variable "traceDepth" was declared but never referenced
          
      1>c:\users\gundeep\downloads\final_project_gpu\gpupathtracer\gpu-path-tracer\src\glm\core\type_vec3.inl(59): warning : calling a host function("_wassert") from a __device__/__global__ function("glm::detail::tvec3<float> ::operator []") is not allowed
          
@@ -35,27 +33,25 @@
          
      1>c:\users\gundeep\downloads\final_project_gpu\gpupathtracer\gpu-path-tracer\src\glm\core\type_mat3x3.inl(71): warning : calling a host function("_wassert") from a __device__/__global__ function("glm::detail::tmat3x3<float> ::operator []") is not allowed
          
-         tmpxft_00001124_00000000-0_raytraceKernel.cudafe1.gpu
-         tmpxft_00001124_00000000-5_raytraceKernel.cudafe2.gpu
+         tmpxft_00001768_00000000-0_raytraceKernel.cudafe1.gpu
+         tmpxft_00001768_00000000-5_raytraceKernel.cudafe2.gpu
          raytraceKernel.cu
      1>c:\users\gundeep\downloads\final_project_gpu\gpupathtracer\gpu-path-tracer\src\glm\core\_swizzle.hpp(194): warning : missing return statement at end of non-void function "glm::detail::_swizzle_base2<ValueType, VecType, N, E0, E1, E2, E3, 1>::operator=(const glm::detail::_swizzle_base2<ValueType, VecType, N, E0, E1, E2, E3, 1>::Stub &)"
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(63): warning : variable "F" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(64): warning : variable "F" was declared but never referenced
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(63): warning : variable "ktransmit" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(64): warning : variable "ktransmit" was declared but never referenced
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(108): warning : variable "cook" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(192): warning : variable "dof" was declared but never referenced
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(184): warning : variable "dof" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(379): warning : variable "t" was declared but never referenced
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(373): warning : variable "t" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(578): warning : variable "t" was declared but never referenced
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(572): warning : variable "t" was declared but never referenced
+     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(691): warning : variable "traceDepth" was declared but never referenced
          
-     1>C:/Users/gundeep/Downloads/Final_project_GPU/GPUpathTracer/GPU-Path-Tracer/src/raytraceKernel.cu(681): warning : variable "traceDepth" was declared but never referenced
-         
-         tmpxft_00001124_00000000-0_raytraceKernel.cudafe1.cpp
-         tmpxft_00001124_00000000-11_raytraceKernel.ii
+         tmpxft_00001768_00000000-0_raytraceKernel.cudafe1.cpp
+         tmpxft_00001768_00000000-11_raytraceKernel.ii
        ClCompile:
          All outputs are up-to-date.
          All outputs are up-to-date.
@@ -86,4 +82,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:16.31
+Time Elapsed 00:00:16.62
