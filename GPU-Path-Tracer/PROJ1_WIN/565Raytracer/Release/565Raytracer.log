@@ -1,9 +1,9 @@
-﻿Build started 12/13/2012 4:16:20 PM.
+﻿Build started 12/13/2012 11:40:22 PM.
      1>Project "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\565Raytracer.vcxproj" on node 2 (clean target(s)).
      1>_PrepareForClean:
          Deleting file "Release\565Raytracer.lastbuildstate".
        CudaClean:
-         cmd.exe /C "C:\Users\gundeep\AppData\Local\Temp\572e25c69e0442879e583afb6271b32a.cmd"
+         cmd.exe /C "C:\Users\gundeep\AppData\Local\Temp\db754433d1a84a478fe5f8d27533e1f3.cmd"
          "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"    --keep-dir "Release" -maxrregcount=0  --machine 32 --compile      -Xcompiler "/EHsc /nologo /Od /Zi  /MD " -o "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Release/raytraceKernel.cu.obj" "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu" -clean
          
          C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\bin\nvcc.exe" -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include" -I"C:/ProgramData/NVIDIA Corporation/NVIDIA GPU Computing SDK 4.0/C/common/inc" -I"../shared/glew/includes" -I"../shared/freeglut/includes" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.0\include"    --keep-dir "Release" -maxrregcount=0  --machine 32 --compile      -Xcompiler "/EHsc /nologo /Od /Zi  /MD " -o "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\PROJ1_WIN\565Raytracer\Win32/Release/raytraceKernel.cu.obj" "C:\Users\gundeep\Downloads\Final_project_GPU\GPUpathTracer\GPU-Path-Tracer\src\raytraceKernel.cu" -clean 
@@ -12,4 +12,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.35
+Time Elapsed 00:00:00.42

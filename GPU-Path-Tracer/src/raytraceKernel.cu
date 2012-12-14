@@ -48,9 +48,9 @@ __host__ __device__ float cooktorrance(int bounces,int iterations,ray inray, ray
 	glm::vec3& emittedcolor, glm::vec3& temp_color, material mat, float xi1, float xi2)
 {
 	//refered to pixar's link
-	// See norm badler's notes for more information on microfacets and cook torrance.
+	//See norm badler's notes for more information on microfacets and cook torrance.
 	float gaussconstant=100;
-	float roughness=0.2;
+	float roughness=0.04;
 	glm::vec3 specularcolor= glm::vec3(1);
 
 	float n1,n2;
@@ -109,9 +109,11 @@ __host__ __device__ float cooktorrance(int bounces,int iterations,ray inray, ray
 	
 	// sum cntributions
 	
-	float cook= ((fresnel.reflectionCoefficient *D*G)/(PI*n_dot_v))*mat.specularColor.x;
+	float cook= ((fresnel.reflectionCoefficient*D*G)/(PI*n_dot_v)) *mat.specularColor.x;
+
+	cook=cook;
 	
-	return (cook);
+	return ((cook));
 	
 	//temp_color=(temp_color) + pow(glm::length(cook),mat.specularExponent);
 
@@ -239,8 +241,8 @@ __global__ void raycastFromCameraKernel(glm::vec2 resolution, float time, glm::v
   //r.direction = new_direction;
   //
 
-  ray_bundle[index].direction=direction;
-  ray_bundle[index].origin=eye;
+  ray_bundle[index].direction=r.direction;
+  ray_bundle[index].origin=r.origin;
   ray_bundle[index].index_ray=index;
   ray_bundle[index].useful = true;
 
@@ -259,8 +261,6 @@ __global__ void clearImage(glm::vec2 resolution, glm::vec3* image){
       image[index] = glm::vec3(0,0,0);
     }
 }
-
-
 
 //Kernel that writes the image to the OpenGL PBO directly. 
 
@@ -420,9 +420,13 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 				float randomFloat2=(float)u01(rng);
 				float randomFloat3=(float)u01(rng);
 				
+				
+				// Find the scattering dist
 				float scatteringDistance= -log(randomFloatForScatteringDistance)/something.reducedScatteringCoefficient;
 
 				float find_t= (glm::length(POI - raybundle[index].origin));
+
+				//check this to if the ray is still in the object
 				if(scatteringDistance< find_t)
 				{
 
@@ -643,12 +647,14 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 					colors[raybundle[index].index_ray],materials[geoms[Object_number].materialid],
 					random1_num.x,random1_num.y);
 					temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color
-						+0.1f*specterm*(materials[geoms[Object_number].materialid].specularColor);
+						+1.0f*specterm;
 					raybundle[index].direction=outray.direction;
 					raybundle[index].origin=outray.origin;
+					specterm=0;
 				}
 				else
-					temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color;
+					
+				temp[raybundle[index].index_ray]= temp[raybundle[index].index_ray]*materials[geoms[Object_number].materialid].color;
 
 				raybundle[index].direction=random_direction;
 				raybundle[index].origin=POI;

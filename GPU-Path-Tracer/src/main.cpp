@@ -368,7 +368,18 @@ void runCuda(){
 	glm::vec3 viewDirection = -directionToCamera;
 	glm::vec3 eyePosition = renderCam->centerPosition + directionToCamera * renderCam->radius;
 	renderCam->positions[0]= glm::vec3(eyePosition.x,eyePosition.y,eyePosition.z);
-	   
+	
+	/*if (iterations%3==0)
+	{
+		printf(" translkation %f  %f  %f \n", geoms[6].translations[6].x,geoms[6].translations[6].y,geoms[6].translations[6].z);
+		geoms[6].translations[6].x+=15;
+		geoms[6].translations[6].y+=15;
+		printf("geom type %d",geoms[8].type);
+
+	
+
+	}*/
+
 	// execute the kernel
     cudaRaytraceCore(dptr, renderCam, targetFrame, iterations, materials,
 		renderScene->materials.size(), geoms, renderScene->objects.size(),

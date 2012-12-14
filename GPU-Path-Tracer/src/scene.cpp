@@ -255,43 +255,6 @@ int scene::loadCamera(){
 	return 1;
 }
 
-
-	//else  // the the cameramoved is true
-	//{
-	//	camera newCamera;
-	//	float fovy;
-	//	float xDirection = sin(renderCam.yaw) * cos(renderCam.pitch)+0.1;
-	//	float yDirection = sin(renderCam.pitch) +0.1;
-	//	float zDirection = cos(renderCam.yaw) * cos(renderCam.pitch);
-
-
-	//
-	//	float yscaled = tan(fovy*(PI/180));
-	//	float xscaled = (yscaled * newCamera.resolution.x)/newCamera.resolution.y;
-	//	float fovx = (atan(xscaled)*180)/PI;
-	//	newCamera.fov = glm::vec2(fovx, fovy);
-
-
-	//	glm::vec3 directiontocamera= glm::vec3(xDirection,yDirection,zDirection);
-	//	glm::vec3 viewDirection = -directiontocamera;
-	//	glm::vec3 eyePosition =  renderCam.positions[0] + directiontocamera * 4.0f;
-
-	//		renderCam = newCamera;
-	//
-	////set up render camera stuff
-	//renderCam.image = new glm::vec3[(int)renderCam.resolution.x*(int)renderCam.resolution.y];
-	//renderCam.rayList = new ray[(int)renderCam.resolution.x*(int)renderCam.resolution.y];
-	//for(int i=0; i<renderCam.resolution.x*renderCam.resolution.y; i++){
-	//	renderCam.image[i] = glm::vec3(0,0,0);
-	//}
-	//
-	//cout << "Loaded frames for camera!" << endl;
-	//return 1;
-
-
-	//}
-
-	
 }
 
 int scene::loadMaterial(string materialid){
