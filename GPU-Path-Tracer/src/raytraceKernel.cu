@@ -61,7 +61,7 @@ __host__ __device__ float cooktorrance(int bounces,int iterations,ray inray, ray
 	glm::vec3 Nn=glm::normalize(N);
 	glm::vec3 Vn= glm::normalize(-1.0f*inray.direction);
 
-	float F, ktransmit;
+	//float F, ktransmit;
 	float m = roughness;
 
 	//if(inside)
@@ -191,7 +191,7 @@ __global__ void raycastFromCameraKernel(glm::vec2 resolution, float time, glm::v
   
   glm::vec3 direction = glm::normalize(R);
   //major performance cliff at this point, TODO: find out why!
-  bool dof=true;
+//  bool dof=true;
   //if (dof)
   
 
@@ -376,7 +376,7 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 				//printf("okay in mesh");
 				for ( int j=0; j<vbosize/9; ++j)
 				{
-					float t = -1;
+				//	 
 					glm::vec3 temp_intersectionPoint;
 					glm::vec3 temp_normal;
 					
@@ -579,7 +579,7 @@ __global__ void raytraceRay(glm::vec2 resolution, float time, cameraData cam, in
 						//printf("okay in mesh");
 						for ( int j=0; j<vbosize/9; ++j)
 						{
-							float t = -1;
+						
 							glm::vec3 temp_intersectionPoint;
 							glm::vec3 temp_normal;
 					
@@ -694,7 +694,6 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
 					float* vbo, float* nbo,float* cbo, int vbosize, int nbosize,int cbosize, obj* objs, int numberofmeshes,
 					int number_of_faces, triangle* tri_faces, int* ibo, int ibosize){
   
-  int traceDepth = 3; //determines how many bounces the raytracer traces
   int bounces=0;
   int activerays=(int)renderCam->resolution.x*(int)renderCam->resolution.y;
 
@@ -733,6 +732,18 @@ void cudaRaytraceCore(uchar4* PBOpos, camera* renderCam, int frame, int iteratio
     newStaticGeom.transform = geoms[i].transforms[frame];
     newStaticGeom.inverseTransform = geoms[i].inverseTransforms[frame];
 	newStaticGeom.tranposeTranform=geoms[i].tranposeTranforms[frame];
+
+	//// For Motion Blur
+		if (i == 8)
+		{
+			newStaticGeom.translation.x += 0.00005;
+			geoms[i].translations[frame] = newStaticGeom.translation;
+			glm::mat4 transform = utilityCore::buildTransformationMatrix(newStaticGeom.translation, newStaticGeom.rotation, newStaticGeom.scale);
+			geoms[i].transforms[frame] =  utilityCore::glmMat4ToCudaMat4(transform);
+			geoms[i].inverseTransforms[frame] = utilityCore::glmMat4ToCudaMat4(glm::inverse(transform));
+			geoms[i].tranposeTranforms[frame] = utilityCore::glmMat4ToCudaMat4(glm::inverse(glm::transpose(transform)));
+		}
+
     geomList[i] = newStaticGeom;
   }
   

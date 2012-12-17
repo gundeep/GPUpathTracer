@@ -12,8 +12,7 @@
 /////////////////////////////////
 
 void fixYaw() {
-	float twoPI=6.2831853071795864769252867665590057683943;
-	renderCam->yaw = glm::mod(renderCam->yaw,twoPI); // Normalize the yaw.
+	renderCam->yaw = glm::mod(renderCam->yaw,6.28f); // Normalize the yaw.
 }
 
 void fixPitch() {
@@ -22,7 +21,7 @@ void fixPitch() {
 }
 
 void fixRadius() {
-	float minRadius = 0.2;
+	float minRadius = 0.02;
 	float maxRadius = 100.0;
 	renderCam->radius = clamp(renderCam->radius, minRadius, maxRadius);
 }
@@ -44,7 +43,7 @@ void changePitch(float m){
 
 void changeRadius(float m){
 	renderCam->radius += renderCam->radius * m; // Change proportional to current radius. Assuming radius isn't allowed to go to zero.
-	fixRadius();
+	//fixRadius();
 }
 
 void changeAltitude(float m){
@@ -54,7 +53,7 @@ void changeAltitude(float m){
 
 void changeApertureDiameter(float m){
 	renderCam->apertureRadius += (renderCam->apertureRadius + 0.01) * m; // Change proportional to current apertureRadius.
-	fixApertureRadius();
+	//fixApertureRadius();
 }
 
 float rx;
@@ -97,7 +96,7 @@ void motion(int x, int y)
 	 {
 		if (mouse_buttons == GLUT_RIGHT_BUTTON)  // Rotate
 			{
-				cout<<"mouse left button";
+				//cout<<"mouse left button";
 				changeYaw(dx * 0.01);
 				changePitch(-dy * 0.01);
 			}
@@ -108,8 +107,7 @@ void motion(int x, int y)
 
 			if (mouse_buttons ==  GLUT_LEFT_BUTTON) // camera move
 			{
-				changeRadius(-dy * 0.01);
-
+				changeRadius(-dy*0.01f);
 			}
 		mouse_old_x = x;
 		mouse_old_y = y;
@@ -369,17 +367,7 @@ void runCuda(){
 	glm::vec3 eyePosition = renderCam->centerPosition + directionToCamera * renderCam->radius;
 	renderCam->positions[0]= glm::vec3(eyePosition.x,eyePosition.y,eyePosition.z);
 	
-	/*if (iterations%3==0)
-	{
-		printf(" translkation %f  %f  %f \n", geoms[6].translations[6].x,geoms[6].translations[6].y,geoms[6].translations[6].z);
-		geoms[6].translations[6].x+=15;
-		geoms[6].translations[6].y+=15;
-		printf("geom type %d",geoms[8].type);
-
 	
-
-	}*/
-
 	// execute the kernel
     cudaRaytraceCore(dptr, renderCam, targetFrame, iterations, materials,
 		renderScene->materials.size(), geoms, renderScene->objects.size(),

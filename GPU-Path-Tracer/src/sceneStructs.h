@@ -88,14 +88,14 @@ struct camera {
 
 struct material{
 	glm::vec3 color;
-	float specularExponent;
+	double specularExponent;
 	glm::vec3 specularColor;
-	float hasReflective;
-	float hasRefractive;
-	float indexOfRefraction;
-	float hasScatter;
+	double hasReflective;
+	double hasRefractive;
+	double indexOfRefraction;
+	double hasScatter;
 	glm::vec3 absorptionCoefficient;
-	float reducedScatterCoefficient;
+	double reducedScatterCoefficient;
 	float emittance;
 };
 
